@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - MedEdPrep Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: "#eff6ff",
+              100: "#dbeafe",
+              200: "#bfdbfe",
+              300: "#93c5fd",
+              400: "#60a5fa",
+              500: "#3b82f6",
+              600: "#2563eb",
+              700: "#1d4ed8"
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    /* Page-specific overrides */
+    .stat-row-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 1200px) {
+      .stat-row-5 { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .stat-row-5 { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Alert banner */
+    .alert-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      border-radius: var(--radius-lg);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .alert-banner.amber {
+      background: var(--amber-soft);
+      border: 1px solid rgba(217, 119, 6, 0.25);
+      color: #92400e;
+    }
+    .alert-banner a {
+      color: #92400e;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .alert-banner a:hover {
+      color: #78350f;
+    }
+    .alert-banner .alert-icon {
+      flex-shrink: 0;
+    }
+    .alert-banner .alert-sep {
+      color: rgba(146, 64, 14, 0.4);
+      margin: 0 2px;
+    }
+
+    /* Gauge arc for NREMT pass rate */
+    .mini-gauge {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+    }
+    .mini-gauge svg {
+      width: 44px;
+      height: 44px;
+    }
+    .mini-gauge .gauge-bg {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 4;
+    }
+    .mini-gauge .gauge-fill {
+      fill: none;
+      stroke-width: 4;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.6s ease;
+    }
+
+    /* MedEdPrep dashboard panel */
+    .mep-dashboard {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .mep-dashboard .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .mep-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    .mep-row + .mep-row {
+      border-top: none;
+    }
+    .mep-cell {
+      background: var(--bg-surface);
+      padding: 16px 18px;
+      text-align: center;
+    }
+    .mep-cell-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .mep-cell-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .mep-cell-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .mep-cell-sub .up { color: var(--green); }
+    .mep-cell-sub .down { color: var(--red); }
+
+    /* NEW badge */
+    .badge-new {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(37, 99, 235, 0.1);
+      color: #1d4ed8;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      letter-spacing: 0.04em;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* Feature pills */
+    .feature-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--bg-base);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .feature-pill .pill-count {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    /* Alert list in dashboard */
+    .mep-alerts {
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .mep-alert-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mep-alert-item.warning {
+      background: var(--amber-soft);
+      border: 1px solid rgba(217, 119, 6, 0.2);
+      color: #92400e;
+    }
+    .mep-alert-item.warning:hover {
+      border-color: rgba(217, 119, 6, 0.5);
+    }
+    .mep-alert-item.info {
+      background: var(--accent-soft);
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      color: var(--accent);
+    }
+    .mep-alert-item.info:hover {
+      border-color: rgba(37, 99, 235, 0.4);
+    }
+
+    /* Chart tabs */
+    .chart-tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .chart-tab {
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .chart-tab:hover {
+      color: var(--text-secondary);
+    }
+    .chart-tab.active {
+      color: var(--text-accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Chart container */
+    .chart-panel {
+      display: none;
+      padding: 24px;
+    }
+    .chart-panel.active {
+      display: block;
+    }
+
+    /* Month toggle */
+    .month-toggle-group {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .month-toggle {
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .month-toggle:last-child { border-right: none; }
+    .month-toggle:hover { color: var(--text-secondary); background: var(--bg-hover); }
+    .month-toggle.active {
+      color: var(--text-accent);
+      background: var(--accent-soft);
+    }
+
+    /* SVG chart styles */
+    .chart-svg {
+      width: 100%;
+      overflow: visible;
+    }
+    .chart-grid-line {
+      stroke: var(--border);
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+    .chart-axis-label {
+      font-size: 11px;
+      fill: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+    }
+    .chart-area-fill {
+      opacity: 0.15;
+    }
+    .chart-line {
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Schools by state grid */
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 6px;
+      padding: 16px 18px;
+    }
+    .state-chip {
+      text-align: center;
+      padding: 8px 4px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .state-chip:hover {
+      border-color: var(--accent);
+      color: var(--text-accent);
+    }
+    .state-chip .count {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    /* School list item */
+    .school-list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.1s;
+    }
+    .school-list-item:hover { background: var(--bg-hover); }
+    .school-list-item:last-child { border-bottom: none; }
+    .school-list-body { flex: 1; min-width: 0; }
+    .school-list-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .school-list-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Activity feed */
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .feed-body { flex: 1; }
+    .feed-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .feed-text strong { color: var(--text-primary); font-weight: 500; }
+    .feed-time {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Bottom layout */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 1024px) {
+      .bottom-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Needs attention sidebar */
+    .attention-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .attention-item:last-child { border-bottom: none; }
+    .attention-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .attention-body { flex: 1; min-width: 0; }
+    .attention-school {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .attention-reason {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Platform badge on school list */
+    .platform-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    @media (max-width: 900px) {
+      .mep-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <span>MedEdPrep Portal</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Workspace</div>
+        <a href="index.html">
+          <i data-lucide="sun"></i>
+          My Day
+        </a>
+        <a href="dashboard-v2.html" class="active">
+          <i data-lucide="bar-chart-3"></i>
+          Dashboard
+        </a>
+        <a href="schools-v2.html">
+          <i data-lucide="graduation-cap"></i>
+          Schools
+        </a>
+        <a href="#">
+          <i data-lucide="git-branch"></i>
+          Pipeline
+        </a>
+        <a href="#">
+          <i data-lucide="users"></i>
+          Customers
+        </a>
+        <a href="#">
+          <i data-lucide="refresh-cw"></i>
+          Renewals
+        </a>
+        <a href="outreach.html">
+          <i data-lucide="send"></i>
+          Outreach
+        </a>
+        <div class="sidebar-section-label">Tools</div>
+        <a href="#">
+          <i data-lucide="calendar"></i>
+          Calendar
+        </a>
+        <a href="#">
+          <i data-lucide="settings"></i>
+          Admin
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">SC</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">Samantha C.</div>
+            <div class="sidebar-user-role">Sales Rep</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-title">Dashboard</div>
+        <div class="header-search">
+          <i data-lucide="search"></i>
+          <input type="text" placeholder="Search schools, contacts, deals...">
+        </div>
+        <div class="header-right">
+          <button class="btn-icon"><i data-lucide="bell" style="width:16px;height:16px"></i></button>
+          <div class="header-avatar">SC</div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Alert Banner — platform-wide alerts -->
+        <div class="alert-banner amber">
+          <i data-lucide="alert-triangle" class="alert-icon" style="width:16px;height:16px;color:#d97706"></i>
+          <span>
+            <a href="#">12 schools with expiring subs</a>
+            <span class="alert-sep">&middot;</span>
+            <a href="#">3 health degraded this week</a>
+            <span class="alert-sep">&middot;</span>
+            Platform NREMT: <strong>82%</strong>
+          </span>
+        </div>
+
+        <!-- Stats Cards Row (5 cards) -->
+        <div class="stat-row-5">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <i data-lucide="school" style="width:20px;height:20px"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-label">Total Schools</div>
+              <div class="stat-value">120</div>
+              <div style="font-size:0.72rem;color:var(--green);font-weight:600;margin-top:2px">
+                <i data-lucide="trending-up" style="width:12px;height:12px;display:inline;vertical-align:-2px"></i>
+                +3 this month
+              </div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <i data-lucide="check-circle-2" style="width:20px;height:20px"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-label">Active</div>
+              <div class="stat-value">85</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple">
+              <i data-lucide="sparkles" style="width:20px;height:20px"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-label">Leads</div>
+              <div class="stat-value">35</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon amber">
+              <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-label">Needs Attention</div>
+              <div class="stat-value">8</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="mini-gauge">
+              <svg viewBox="0 0 44 44">
+                <circle class="gauge-bg" cx="22" cy="22" r="18"></circle>
+                <circle class="gauge-fill" cx="22" cy="22" r="18"
+                  stroke="#16a34a"
+                  stroke-dasharray="113.1"
+                  stroke-dashoffset="20.36"
+                  transform="rotate(-90 22 22)"></circle>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-label">NREMT Pass Rate</div>
+              <div class="stat-value" style="color:var(--green)">82%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MedEdPrep Dashboard Widget -->
+        <div class="mep-dashboard">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i data-lucide="bar-chart-3" style="width:16px;height:16px"></i>
+              MedEdPrep Dashboard
+            </div>
+            <span class="badge badge-blue">Live</span>
+          </div>
+
+          <!-- Row 1: Core metrics -->
+          <div class="mep-row">
+            <div class="mep-cell">
+              <div class="mep-cell-label">Linked Schools</div>
+              <div class="mep-cell-value">72</div>
+              <div class="mep-cell-sub">of 120 total</div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label">Active Students</div>
+              <div class="mep-cell-value">1,800</div>
+              <div class="mep-cell-sub">of 5,000 seats</div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label">Logins 30d</div>
+              <div class="mep-cell-value">4,200</div>
+              <div class="mep-cell-sub"><span class="up">+12% vs prior</span></div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label">Revenue</div>
+              <div class="mep-cell-value">$145K</div>
+              <div class="mep-cell-sub"><span class="up">+8.2% YoY</span></div>
+            </div>
+          </div>
+
+          <!-- Row 2: BI metrics -->
+          <div class="mep-row">
+            <div class="mep-cell">
+              <div class="mep-cell-label">MRR</div>
+              <div class="mep-cell-value" style="color:var(--accent)">$45,000</div>
+              <div class="mep-cell-sub"><span class="up">+5.9%</span></div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label">Churn (total)</div>
+              <div class="mep-cell-value">48</div>
+              <div class="mep-cell-sub">15 clean &middot; 8 active &middot; 25 silent</div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label">Conversion</div>
+              <div class="mep-cell-value" style="color:var(--green)">40%</div>
+              <div class="mep-cell-sub">60 this month</div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label">Health</div>
+              <div class="mep-cell-value">
+                <span class="health-score health-green" style="font-size:1.1rem;">
+                  <span class="health-dot"></span>
+                  Healthy
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Extended metrics -->
+          <div class="mep-row">
+            <div class="mep-cell">
+              <div class="mep-cell-label">CE Revenue <span class="badge-new">NEW</span></div>
+              <div class="mep-cell-value" style="color:var(--accent)">$800</div>
+              <div class="mep-cell-sub">MRR &middot; $5,000 total</div>
+            </div>
+            <div class="mep-cell" style="text-align:left;padding:14px 18px;">
+              <div class="mep-cell-label">Feature Adoption</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;">
+                <span class="feature-pill">Adaptive: <span class="pill-count">45</span></span>
+                <span class="feature-pill">EOPA: <span class="pill-count">12</span></span>
+                <span class="feature-pill">CE: <span class="pill-count">30</span></span>
+                <span class="feature-pill">Video: <span class="pill-count">60</span></span>
+              </div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label" style="color:var(--amber)">Expiring Subs</div>
+              <div class="mep-cell-value" style="color:var(--amber)">42</div>
+              <div class="mep-cell-sub" style="color:var(--amber)">schools next 30d</div>
+            </div>
+            <div class="mep-cell">
+              <div class="mep-cell-label" style="color:var(--red)">Deleted Users (30d)</div>
+              <div class="mep-cell-value" style="color:var(--red)">25</div>
+              <div class="mep-cell-sub"><span class="down">above threshold</span></div>
+            </div>
+          </div>
+
+          <!-- Alerts section -->
+          <div class="mep-alerts">
+            <div class="mep-alert-item info">
+              <i data-lucide="link" style="width:13px;height:13px"></i>
+              8 schools pending match
+            </div>
+            <div class="mep-alert-item info">
+              <i data-lucide="eye-off" style="width:13px;height:13px"></i>
+              5 schools with zero logins in 30d
+            </div>
+            <div class="mep-alert-item warning">
+              <i data-lucide="clock" style="width:13px;height:13px"></i>
+              12 schools with expiring subs this month
+            </div>
+            <div class="mep-alert-item warning">
+              <i data-lucide="ticket" style="width:13px;height:13px"></i>
+              2 coupons expiring within 30 days
+            </div>
+          </div>
+        </div>
+
+        <!-- Trend Charts Section -->
+        <div class="panel" style="margin-bottom:24px;">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i data-lucide="trending-up" style="width:16px;height:16px"></i>
+              Platform Trends
+            </div>
+            <div class="month-toggle-group">
+              <button class="month-toggle" onclick="setMonths(6, this)">6 months</button>
+              <button class="month-toggle active" onclick="setMonths(12, this)">12 months</button>
+              <button class="month-toggle" onclick="setMonths(24, this)">24 months</button>
+            </div>
+          </div>
+
+          <div class="chart-tab-bar">
+            <button class="chart-tab active" onclick="switchChart('mrr', this)">MRR Over Time</button>
+            <button class="chart-tab" onclick="switchChart('signups', this)">Signups</button>
+            <button class="chart-tab" onclick="switchChart('active-users', this)">Active Users</button>
+            <button class="chart-tab" onclick="switchChart('churn', this)">Churn</button>
+          </div>
+
+          <!-- MRR Chart -->
+          <div id="chart-mrr" class="chart-panel active">
+            <svg class="chart-svg" viewBox="0 0 800 260" preserveAspectRatio="xMidYMid meet">
+              <!-- Grid lines -->
+              <line x1="60" y1="30" x2="780" y2="30" class="chart-grid-line"/>
+              <line x1="60" y1="90" x2="780" y2="90" class="chart-grid-line"/>
+              <line x1="60" y1="150" x2="780" y2="150" class="chart-grid-line"/>
+              <line x1="60" y1="210" x2="780" y2="210" class="chart-grid-line"/>
+              <!-- Y-axis labels -->
+              <text x="52" y="34" text-anchor="end" class="chart-axis-label">$45K</text>
+              <text x="52" y="94" text-anchor="end" class="chart-axis-label">$42K</text>
+              <text x="52" y="154" text-anchor="end" class="chart-axis-label">$39K</text>
+              <text x="52" y="214" text-anchor="end" class="chart-axis-label">$35K</text>
+              <!-- X-axis labels -->
+              <text x="120" y="240" text-anchor="middle" class="chart-axis-label">Jun '25</text>
+              <text x="180" y="240" text-anchor="middle" class="chart-axis-label">Jul</text>
+              <text x="240" y="240" text-anchor="middle" class="chart-axis-label">Aug</text>
+              <text x="300" y="240" text-anchor="middle" class="chart-axis-label">Sep</text>
+              <text x="360" y="240" text-anchor="middle" class="chart-axis-label">Oct</text>
+              <text x="420" y="240" text-anchor="middle" class="chart-axis-label">Nov</text>
+              <text x="480" y="240" text-anchor="middle" class="chart-axis-label">Dec</text>
+              <text x="540" y="240" text-anchor="middle" class="chart-axis-label">Jan '26</text>
+              <text x="600" y="240" text-anchor="middle" class="chart-axis-label">Feb</text>
+              <text x="660" y="240" text-anchor="middle" class="chart-axis-label">Mar</text>
+              <text x="720" y="240" text-anchor="middle" class="chart-axis-label">Apr</text>
+              <text x="780" y="240" text-anchor="middle" class="chart-axis-label">May</text>
+              <!-- Area fill -->
+              <path d="M120,200 L180,185 L240,175 L300,160 L360,148 L420,135 L480,120 L540,108 L600,95 L660,75 L720,55 L780,30 L780,210 L120,210 Z"
+                    fill="url(#mrrGradient)" class="chart-area-fill"/>
+              <!-- Line -->
+              <path d="M120,200 L180,185 L240,175 L300,160 L360,148 L420,135 L480,120 L540,108 L600,95 L660,75 L720,55 L780,30"
+                    stroke="#2563eb" class="chart-line"/>
+              <!-- Dots -->
+              <circle cx="120" cy="200" r="4" fill="#2563eb"/>
+              <circle cx="180" cy="185" r="4" fill="#2563eb"/>
+              <circle cx="240" cy="175" r="4" fill="#2563eb"/>
+              <circle cx="300" cy="160" r="4" fill="#2563eb"/>
+              <circle cx="360" cy="148" r="4" fill="#2563eb"/>
+              <circle cx="420" cy="135" r="4" fill="#2563eb"/>
+              <circle cx="480" cy="120" r="4" fill="#2563eb"/>
+              <circle cx="540" cy="108" r="4" fill="#2563eb"/>
+              <circle cx="600" cy="95" r="4" fill="#2563eb"/>
+              <circle cx="660" cy="75" r="4" fill="#2563eb"/>
+              <circle cx="720" cy="55" r="4" fill="#2563eb"/>
+              <circle cx="780" cy="30" r="5" fill="#2563eb" stroke="white" stroke-width="2"/>
+              <!-- Gradient def -->
+              <defs>
+                <linearGradient id="mrrGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2563eb" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#2563eb" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div style="text-align:center;margin-top:8px;font-size:0.78rem;color:var(--text-muted)">
+              Current: <strong style="color:var(--accent)">$45,000</strong> &middot; 12-month growth: <strong style="color:var(--green)">+28.6%</strong>
+            </div>
+          </div>
+
+          <!-- Signups Chart -->
+          <div id="chart-signups" class="chart-panel">
+            <svg class="chart-svg" viewBox="0 0 800 260" preserveAspectRatio="xMidYMid meet">
+              <!-- Grid lines -->
+              <line x1="60" y1="30" x2="780" y2="30" class="chart-grid-line"/>
+              <line x1="60" y1="90" x2="780" y2="90" class="chart-grid-line"/>
+              <line x1="60" y1="150" x2="780" y2="150" class="chart-grid-line"/>
+              <line x1="60" y1="210" x2="780" y2="210" class="chart-grid-line"/>
+              <!-- Y-axis -->
+              <text x="52" y="34" text-anchor="end" class="chart-axis-label">80</text>
+              <text x="52" y="94" text-anchor="end" class="chart-axis-label">60</text>
+              <text x="52" y="154" text-anchor="end" class="chart-axis-label">40</text>
+              <text x="52" y="214" text-anchor="end" class="chart-axis-label">20</text>
+              <!-- X-axis labels -->
+              <text x="120" y="240" text-anchor="middle" class="chart-axis-label">Jun '25</text>
+              <text x="180" y="240" text-anchor="middle" class="chart-axis-label">Jul</text>
+              <text x="240" y="240" text-anchor="middle" class="chart-axis-label">Aug</text>
+              <text x="300" y="240" text-anchor="middle" class="chart-axis-label">Sep</text>
+              <text x="360" y="240" text-anchor="middle" class="chart-axis-label">Oct</text>
+              <text x="420" y="240" text-anchor="middle" class="chart-axis-label">Nov</text>
+              <text x="480" y="240" text-anchor="middle" class="chart-axis-label">Dec</text>
+              <text x="540" y="240" text-anchor="middle" class="chart-axis-label">Jan '26</text>
+              <text x="600" y="240" text-anchor="middle" class="chart-axis-label">Feb</text>
+              <text x="660" y="240" text-anchor="middle" class="chart-axis-label">Mar</text>
+              <text x="720" y="240" text-anchor="middle" class="chart-axis-label">Apr</text>
+              <text x="780" y="240" text-anchor="middle" class="chart-axis-label">May</text>
+              <!-- Stacked bars: paid (blue) + free (gray) -->
+              <rect x="105" y="165" width="30" height="45" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="105" y="180" width="30" height="30" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="165" y="158" width="30" height="52" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="165" y="175" width="30" height="35" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="225" y="150" width="30" height="60" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="225" y="170" width="30" height="40" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="285" y="143" width="30" height="67" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="285" y="165" width="30" height="45" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="345" y="140" width="30" height="70" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="345" y="162" width="30" height="48" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="405" y="135" width="30" height="75" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="405" y="158" width="30" height="52" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="465" y="128" width="30" height="82" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="465" y="153" width="30" height="57" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="525" y="120" width="30" height="90" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="525" y="148" width="30" height="62" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="585" y="113" width="30" height="97" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="585" y="142" width="30" height="68" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="645" y="105" width="30" height="105" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="645" y="138" width="30" height="72" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="705" y="95" width="30" height="115" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="705" y="130" width="30" height="80" rx="3" fill="#2563eb" opacity="0.8"/>
+              <rect x="765" y="85" width="30" height="125" rx="3" fill="#94a3b8" opacity="0.5"/>
+              <rect x="765" y="120" width="30" height="90" rx="3" fill="#2563eb" opacity="0.8"/>
+            </svg>
+            <div style="display:flex;justify-content:center;gap:20px;margin-top:12px;font-size:0.78rem;color:var(--text-muted)">
+              <span style="display:flex;align-items:center;gap:5px;">
+                <span style="width:10px;height:10px;border-radius:3px;background:#2563eb;display:inline-block;"></span>
+                Paid
+              </span>
+              <span style="display:flex;align-items:center;gap:5px;">
+                <span style="width:10px;height:10px;border-radius:3px;background:#94a3b8;opacity:0.5;display:inline-block;"></span>
+                Free
+              </span>
+              <span>This month: <strong style="color:var(--text-primary)">75 total</strong> (48 paid, 27 free)</span>
+            </div>
+          </div>
+
+          <!-- Active Users Chart -->
+          <div id="chart-active-users" class="chart-panel">
+            <svg class="chart-svg" viewBox="0 0 800 260" preserveAspectRatio="xMidYMid meet">
+              <!-- Grid lines -->
+              <line x1="60" y1="30" x2="780" y2="30" class="chart-grid-line"/>
+              <line x1="60" y1="90" x2="780" y2="90" class="chart-grid-line"/>
+              <line x1="60" y1="150" x2="780" y2="150" class="chart-grid-line"/>
+              <line x1="60" y1="210" x2="780" y2="210" class="chart-grid-line"/>
+              <!-- Y-axis -->
+              <text x="52" y="34" text-anchor="end" class="chart-axis-label">1,800</text>
+              <text x="52" y="94" text-anchor="end" class="chart-axis-label">1,600</text>
+              <text x="52" y="154" text-anchor="end" class="chart-axis-label">1,400</text>
+              <text x="52" y="214" text-anchor="end" class="chart-axis-label">1,200</text>
+              <!-- X-axis labels -->
+              <text x="120" y="240" text-anchor="middle" class="chart-axis-label">Jun '25</text>
+              <text x="180" y="240" text-anchor="middle" class="chart-axis-label">Jul</text>
+              <text x="240" y="240" text-anchor="middle" class="chart-axis-label">Aug</text>
+              <text x="300" y="240" text-anchor="middle" class="chart-axis-label">Sep</text>
+              <text x="360" y="240" text-anchor="middle" class="chart-axis-label">Oct</text>
+              <text x="420" y="240" text-anchor="middle" class="chart-axis-label">Nov</text>
+              <text x="480" y="240" text-anchor="middle" class="chart-axis-label">Dec</text>
+              <text x="540" y="240" text-anchor="middle" class="chart-axis-label">Jan '26</text>
+              <text x="600" y="240" text-anchor="middle" class="chart-axis-label">Feb</text>
+              <text x="660" y="240" text-anchor="middle" class="chart-axis-label">Mar</text>
+              <text x="720" y="240" text-anchor="middle" class="chart-axis-label">Apr</text>
+              <text x="780" y="240" text-anchor="middle" class="chart-axis-label">May</text>
+              <!-- Line -->
+              <path d="M120,200 L180,188 L240,178 L300,165 L360,155 L420,140 L480,128 L540,115 L600,98 L660,78 L720,52 L780,30"
+                    stroke="#10b981" class="chart-line"/>
+              <!-- Area fill -->
+              <path d="M120,200 L180,188 L240,178 L300,165 L360,155 L420,140 L480,128 L540,115 L600,98 L660,78 L720,52 L780,30 L780,210 L120,210 Z"
+                    fill="url(#usersGradient)" class="chart-area-fill"/>
+              <!-- Dots -->
+              <circle cx="120" cy="200" r="3.5" fill="#10b981"/>
+              <circle cx="180" cy="188" r="3.5" fill="#10b981"/>
+              <circle cx="240" cy="178" r="3.5" fill="#10b981"/>
+              <circle cx="300" cy="165" r="3.5" fill="#10b981"/>
+              <circle cx="360" cy="155" r="3.5" fill="#10b981"/>
+              <circle cx="420" cy="140" r="3.5" fill="#10b981"/>
+              <circle cx="480" cy="128" r="3.5" fill="#10b981"/>
+              <circle cx="540" cy="115" r="3.5" fill="#10b981"/>
+              <circle cx="600" cy="98" r="3.5" fill="#10b981"/>
+              <circle cx="660" cy="78" r="3.5" fill="#10b981"/>
+              <circle cx="720" cy="52" r="3.5" fill="#10b981"/>
+              <circle cx="780" cy="30" r="4.5" fill="#10b981" stroke="white" stroke-width="2"/>
+              <defs>
+                <linearGradient id="usersGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div style="text-align:center;margin-top:8px;font-size:0.78rem;color:var(--text-muted)">
+              Current: <strong style="color:#10b981">1,800 active users</strong> &middot; 12-month growth: <strong style="color:var(--green)">+50%</strong>
+            </div>
+          </div>
+
+          <!-- Churn Chart -->
+          <div id="chart-churn" class="chart-panel">
+            <svg class="chart-svg" viewBox="0 0 800 260" preserveAspectRatio="xMidYMid meet">
+              <!-- Grid lines -->
+              <line x1="60" y1="30" x2="780" y2="30" class="chart-grid-line"/>
+              <line x1="60" y1="90" x2="780" y2="90" class="chart-grid-line"/>
+              <line x1="60" y1="150" x2="780" y2="150" class="chart-grid-line"/>
+              <line x1="60" y1="210" x2="780" y2="210" class="chart-grid-line"/>
+              <!-- Y-axis -->
+              <text x="52" y="34" text-anchor="end" class="chart-axis-label">60</text>
+              <text x="52" y="94" text-anchor="end" class="chart-axis-label">45</text>
+              <text x="52" y="154" text-anchor="end" class="chart-axis-label">30</text>
+              <text x="52" y="214" text-anchor="end" class="chart-axis-label">15</text>
+              <!-- X-axis labels -->
+              <text x="120" y="240" text-anchor="middle" class="chart-axis-label">Jun '25</text>
+              <text x="180" y="240" text-anchor="middle" class="chart-axis-label">Jul</text>
+              <text x="240" y="240" text-anchor="middle" class="chart-axis-label">Aug</text>
+              <text x="300" y="240" text-anchor="middle" class="chart-axis-label">Sep</text>
+              <text x="360" y="240" text-anchor="middle" class="chart-axis-label">Oct</text>
+              <text x="420" y="240" text-anchor="middle" class="chart-axis-label">Nov</text>
+              <text x="480" y="240" text-anchor="middle" class="chart-axis-label">Dec</text>
+              <text x="540" y="240" text-anchor="middle" class="chart-axis-label">Jan '26</text>
+              <text x="600" y="240" text-anchor="middle" class="chart-axis-label">Feb</text>
+              <text x="660" y="240" text-anchor="middle" class="chart-axis-label">Mar</text>
+              <text x="720" y="240" text-anchor="middle" class="chart-axis-label">Apr</text>
+              <text x="780" y="240" text-anchor="middle" class="chart-axis-label">May</text>
+
+              <!-- Stacked areas: silent (red, bottom) -> active (amber, middle) -> clean (gray, top) -->
+              <path d="M120,130 L180,135 L240,128 L300,133 L360,125 L420,130 L480,127 L540,132 L600,128 L660,125 L720,130 L780,127 L780,210 L120,210 Z"
+                    fill="#ef4444" opacity="0.2"/>
+              <path d="M120,130 L180,135 L240,128 L300,133 L360,125 L420,130 L480,127 L540,132 L600,128 L660,125 L720,130 L780,127"
+                    stroke="#ef4444" fill="none" stroke-width="1.5" opacity="0.6"/>
+
+              <path d="M120,155 L180,158 L240,152 L300,156 L360,150 L420,155 L480,152 L540,157 L600,153 L660,150 L720,155 L780,153 L780,130 L720,130 L660,125 L600,128 L540,132 L480,127 L420,130 L360,125 L300,133 L240,128 L180,135 L120,130 Z"
+                    fill="#f59e0b" opacity="0.2"/>
+              <path d="M120,155 L180,158 L240,152 L300,156 L360,150 L420,155 L480,152 L540,157 L600,153 L660,150 L720,155 L780,153"
+                    stroke="#f59e0b" fill="none" stroke-width="1.5" opacity="0.6"/>
+
+              <path d="M120,175 L180,178 L240,173 L300,177 L360,172 L420,176 L480,173 L540,178 L600,174 L660,172 L720,176 L780,175 L780,153 L720,155 L660,150 L600,153 L540,157 L480,152 L420,155 L360,150 L300,156 L240,152 L180,158 L120,155 Z"
+                    fill="#94a3b8" opacity="0.2"/>
+              <path d="M120,175 L180,178 L240,173 L300,177 L360,172 L420,176 L480,173 L540,178 L600,174 L660,172 L720,176 L780,175"
+                    stroke="#94a3b8" fill="none" stroke-width="1.5" opacity="0.6"/>
+            </svg>
+            <div style="display:flex;justify-content:center;gap:20px;margin-top:12px;font-size:0.78rem;color:var(--text-muted)">
+              <span style="display:flex;align-items:center;gap:5px;">
+                <span style="width:10px;height:10px;border-radius:3px;background:#94a3b8;display:inline-block;"></span>
+                Clean (15)
+              </span>
+              <span style="display:flex;align-items:center;gap:5px;">
+                <span style="width:10px;height:10px;border-radius:3px;background:#f59e0b;display:inline-block;"></span>
+                Active (8)
+              </span>
+              <span style="display:flex;align-items:center;gap:5px;">
+                <span style="width:10px;height:10px;border-radius:3px;background:#ef4444;display:inline-block;"></span>
+                Silent (25)
+              </span>
+              <span>Total: <strong style="color:var(--text-primary)">48</strong> &middot; Trend: <strong style="color:var(--green)">Stable</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schools by State + Needs Attention -->
+        <div class="bottom-grid">
+          <!-- Schools by State -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i data-lucide="map-pin" style="width:16px;height:16px"></i>
+                Schools by State
+              </div>
+              <span class="text-xs text-muted">Top 15 states</span>
+            </div>
+            <div class="states-grid">
+              <div class="state-chip"><span class="count">18</span>TX</div>
+              <div class="state-chip"><span class="count">14</span>CA</div>
+              <div class="state-chip"><span class="count">11</span>FL</div>
+              <div class="state-chip"><span class="count">9</span>NY</div>
+              <div class="state-chip"><span class="count">8</span>PA</div>
+              <div class="state-chip"><span class="count">7</span>OH</div>
+              <div class="state-chip"><span class="count">6</span>IL</div>
+              <div class="state-chip"><span class="count">6</span>GA</div>
+              <div class="state-chip"><span class="count">5</span>NC</div>
+              <div class="state-chip"><span class="count">5</span>VA</div>
+              <div class="state-chip"><span class="count">4</span>NJ</div>
+              <div class="state-chip"><span class="count">4</span>TN</div>
+              <div class="state-chip"><span class="count">4</span>CO</div>
+              <div class="state-chip"><span class="count">3</span>MI</div>
+              <div class="state-chip"><span class="count">3</span>AZ</div>
+            </div>
+          </div>
+
+          <!-- Needs Attention -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i data-lucide="alert-triangle" style="width:16px;height:16px;color:var(--amber)"></i>
+                Needs Attention
+              </div>
+              <span class="badge badge-amber">8</span>
+            </div>
+            <div class="panel-body">
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--red)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Sunrise Paramedic Training</div>
+                  <div class="attention-reason">11 days since last contact &middot; 6 attempts</div>
+                </div>
+                <span class="badge badge-red">Overdue</span>
+              </div>
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--amber)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Bayfront College of Allied Health</div>
+                  <div class="attention-reason">Health score degraded &middot; Logins dropped 60%</div>
+                </div>
+                <span class="badge badge-amber">Health</span>
+              </div>
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--amber)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Desert Valley Community College</div>
+                  <div class="attention-reason">Subscription expiring Jun 15</div>
+                </div>
+                <span class="badge badge-amber">Expiring</span>
+              </div>
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--red)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Metro EMS Academy</div>
+                  <div class="attention-reason">Cancellation initiated today</div>
+                </div>
+                <span class="badge badge-red">Cancel</span>
+              </div>
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--amber)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Lakeside Technical Institute</div>
+                  <div class="attention-reason">Zero student logins past 30 days</div>
+                </div>
+                <span class="badge badge-amber">Inactive</span>
+              </div>
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--amber)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Riverside Community College</div>
+                  <div class="attention-reason">Pending platform match &middot; 5 days</div>
+                </div>
+                <span class="badge badge-blue">Match</span>
+              </div>
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--red)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Cedar Creek EMS Training</div>
+                  <div class="attention-reason">Cancellation initiated today</div>
+                </div>
+                <span class="badge badge-red">Cancel</span>
+              </div>
+              <div class="attention-item">
+                <div class="attention-dot" style="background:var(--amber)"></div>
+                <div class="attention-body">
+                  <div class="attention-school">Mountain View EMS Education</div>
+                  <div class="attention-reason">Coupon expires in 12 days</div>
+                </div>
+                <span class="badge badge-amber">Coupon</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Schools + Activity Feed -->
+        <div class="bottom-grid">
+          <!-- Recent Schools -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i data-lucide="clock" style="width:16px;height:16px"></i>
+                Recent Schools
+              </div>
+              <a href="schools-v2.html" class="text-xs" style="color:var(--text-accent)">View all</a>
+            </div>
+            <div class="panel-body">
+              <div class="school-list-item">
+                <div class="stat-icon blue" style="width:32px;height:32px">
+                  <i data-lucide="building-2" style="width:16px;height:16px"></i>
+                </div>
+                <div class="school-list-body">
+                  <div class="school-list-name">
+                    Harbor Community College
+                    <span class="platform-badge" style="margin-left:6px">
+                      <i data-lucide="check" style="width:9px;height:9px"></i>
+                      New on Platform
+                    </span>
+                  </div>
+                  <div class="school-list-meta">Long Beach, CA &middot; Engaged &middot; Added May 10</div>
+                </div>
+              </div>
+              <div class="school-list-item">
+                <div class="stat-icon green" style="width:32px;height:32px">
+                  <i data-lucide="building-2" style="width:16px;height:16px"></i>
+                </div>
+                <div class="school-list-body">
+                  <div class="school-list-name">Summit Healthcare Training</div>
+                  <div class="school-list-meta">Chicago, IL &middot; Engaged &middot; Added May 8</div>
+                </div>
+              </div>
+              <div class="school-list-item">
+                <div class="stat-icon purple" style="width:32px;height:32px">
+                  <i data-lucide="building-2" style="width:16px;height:16px"></i>
+                </div>
+                <div class="school-list-body">
+                  <div class="school-list-name">
+                    Valley Emergency Training
+                    <span class="platform-badge" style="margin-left:6px">
+                      <i data-lucide="check" style="width:9px;height:9px"></i>
+                      New on Platform
+                    </span>
+                  </div>
+                  <div class="school-list-meta">Denver, CO &middot; New Outreach &middot; Added May 6</div>
+                </div>
+              </div>
+              <div class="school-list-item">
+                <div class="stat-icon amber" style="width:32px;height:32px">
+                  <i data-lucide="building-2" style="width:16px;height:16px"></i>
+                </div>
+                <div class="school-list-body">
+                  <div class="school-list-name">Lincoln Technical Institute</div>
+                  <div class="school-list-meta">Newark, NJ &middot; Outreach &middot; Added May 4</div>
+                </div>
+              </div>
+              <div class="school-list-item">
+                <div class="stat-icon blue" style="width:32px;height:32px">
+                  <i data-lucide="building-2" style="width:16px;height:16px"></i>
+                </div>
+                <div class="school-list-body">
+                  <div class="school-list-name">Coastal Academy of Emergency Medicine</div>
+                  <div class="school-list-meta">Virginia Beach, VA &middot; Outreach &middot; Added May 2</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Feed -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i data-lucide="activity" style="width:16px;height:16px"></i>
+                Activity Feed
+              </div>
+              <span class="badge badge-muted">Today</span>
+            </div>
+            <div class="panel-body">
+              <div class="feed-item">
+                <div class="feed-dot" style="background:var(--green)"></div>
+                <div class="feed-body">
+                  <div class="feed-text"><strong>Samantha C.</strong> booked a demo with <strong>Harbor Community College</strong></div>
+                  <div class="feed-time">10 min ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-dot" style="background:var(--accent)"></div>
+                <div class="feed-body">
+                  <div class="feed-text"><strong>System</strong> matched <strong>3 new schools</strong> from MedEdPrep platform data</div>
+                  <div class="feed-time">25 min ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-dot" style="background:var(--amber)"></div>
+                <div class="feed-body">
+                  <div class="feed-text"><strong>Heather K.</strong> logged follow-up with <strong>Metro EMS Academy</strong> - callback May 14</div>
+                  <div class="feed-time">1 hour ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-dot" style="background:var(--purple)"></div>
+                <div class="feed-body">
+                  <div class="feed-text"><strong>Samantha B.</strong> sent proposal to <strong>Northridge Paramedic Program</strong></div>
+                  <div class="feed-time">2 hours ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-dot" style="background:var(--red)"></div>
+                <div class="feed-body">
+                  <div class="feed-text"><strong>Health alert:</strong> <strong>Bayfront College</strong> login rate dropped below threshold</div>
+                  <div class="feed-time">3 hours ago</div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-dot" style="background:var(--green)"></div>
+                <div class="feed-body">
+                  <div class="feed-text"><strong>System</strong> auto-renewed subscription for <strong>Pacific Coast Institute</strong></div>
+                  <div class="feed-time">4 hours ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Chart tab switching
+    function switchChart(chartId, btn) {
+      document.querySelectorAll('.chart-panel').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      document.querySelectorAll('.chart-tab').forEach(function(t) {
+        t.classList.remove('active');
+      });
+      document.getElementById('chart-' + chartId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Month toggle (visual only for prototype)
+    function setMonths(months, btn) {
+      document.querySelectorAll('.month-toggle').forEach(function(t) {
+        t.classList.remove('active');
+      });
+      btn.classList.add('active');
+    }
+
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

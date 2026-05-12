@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Schools — MedEdPrep Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    /* === Schools Page Enhancements === */
+
+    /* Sortable column headers */
+    .data-table th.sortable {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      padding-right: 22px;
+      transition: color 0.15s;
+    }
+    .data-table th.sortable:hover {
+      color: var(--text-secondary);
+    }
+    .data-table th.sortable::after {
+      content: '';
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--text-muted);
+      opacity: 0.3;
+    }
+    .data-table th.sortable.asc::after {
+      border-top: none;
+      border-bottom: 5px solid var(--text-accent);
+      opacity: 1;
+    }
+    .data-table th.sortable.desc::after {
+      border-top: 5px solid var(--text-accent);
+      opacity: 1;
+    }
+    .data-table th.sortable.asc,
+    .data-table th.sortable.desc {
+      color: var(--text-accent);
+    }
+
+    /* Region left border */
+    .data-table tr[data-region="east"] td:first-child { border-left: 3px solid #3b82f6; }
+    .data-table tr[data-region="southeast"] td:first-child { border-left: 3px solid #22c55e; }
+    .data-table tr[data-region="great-lakes"] td:first-child { border-left: 3px solid #a78bfa; }
+    .data-table tr[data-region="plains"] td:first-child { border-left: 3px solid #f59e0b; }
+    .data-table tr[data-region="south-central"] td:first-child { border-left: 3px solid #ef4444; }
+    .data-table tr[data-region="rocky-mountain"] td:first-child { border-left: 3px solid #f97316; }
+    .data-table tr[data-region="western"] td:first-child { border-left: 3px solid #14b8a6; }
+
+    /* Row clickable styling */
+    .data-table tbody tr {
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .data-table tbody tr:hover td {
+      background: var(--bg-hover);
+    }
+
+    /* Checkbox column */
+    .data-table th.col-check,
+    .data-table td.col-check {
+      width: 36px;
+      padding-left: 12px;
+      padding-right: 4px;
+    }
+    .data-table input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    /* Stage badge colors */
+    .badge-emerald { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .badge-orange { background: rgba(249, 115, 22, 0.12); color: #f97316; }
+    .badge-gray { background: rgba(100, 116, 139, 0.15); color: var(--text-muted); }
+
+    /* Bulk action bar */
+    .bulk-action-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(37,99,235,0.08);
+      z-index: 100;
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+      pointer-events: none;
+    }
+    .bulk-action-bar.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    .bulk-action-bar .bulk-count {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .bulk-action-bar .bulk-separator {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+    }
+    .bulk-action-bar .bulk-btn {
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .bulk-action-bar .bulk-btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .bulk-action-bar .bulk-dismiss {
+      padding: 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bulk-action-bar .bulk-dismiss:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+    /* Saved views dropdown */
+    .saved-views-wrapper {
+      position: relative;
+    }
+    .saved-views-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 220px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 50;
+      display: none;
+      overflow: hidden;
+    }
+    .saved-views-dropdown.open {
+      display: block;
+    }
+    .saved-views-dropdown .view-option {
+      padding: 9px 14px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .saved-views-dropdown .view-option:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+    .saved-views-dropdown .view-option.active {
+      color: var(--text-accent);
+      background: var(--accent-soft);
+    }
+    .saved-views-dropdown .view-option i {
+      width: 14px;
+      height: 14px;
+      opacity: 0.7;
+    }
+
+    /* ===== Platform toggle group ===== */
+    .platform-toggle-group {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .platform-toggle {
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .platform-toggle:last-child { border-right: none; }
+    .platform-toggle:hover { color: var(--text-secondary); background: var(--bg-hover); }
+    .platform-toggle.active {
+      color: var(--text-accent);
+      background: var(--accent-soft);
+    }
+
+    /* ===== Composite Platform column ===== */
+    .data-table th.col-platform,
+    .data-table td.col-platform {
+      width: 100px;
+      text-align: center;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .platform-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .platform-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .platform-dot.green { background: var(--green); }
+    .platform-dot.amber { background: var(--amber); }
+    .platform-dot.red { background: var(--red); }
+
+    .platform-indicator.healthy { color: var(--green); }
+    .platform-indicator.warning { color: var(--amber); }
+    .platform-indicator.danger { color: var(--red); }
+    .platform-indicator.none { color: var(--text-muted); font-size: 0.85rem; }
+
+    .platform-indicator.new-link {
+      color: var(--accent);
+    }
+    .platform-indicator.new-link i { width: 14px; height: 14px; }
+    .badge-new-platform {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 1px 7px;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      background: var(--accent-soft);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    /* Platform tooltip */
+    .platform-tooltip-wrap {
+      position: relative;
+    }
+    .platform-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 200px;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      background: var(--text-primary);
+      color: #f1f5f9;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      z-index: 30;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .platform-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--text-primary);
+    }
+    .platform-tooltip-wrap:hover .platform-tooltip {
+      display: block;
+    }
+    .platform-tooltip .tt-title {
+      font-weight: 600;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .platform-tooltip .tt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .platform-tooltip .tt-label {
+      color: rgba(255,255,255,0.7);
+    }
+    .platform-tooltip .tt-value {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* ===== Info bar for saved views ===== */
+    .info-bar {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .info-bar.visible { display: flex; }
+    .info-bar i { width: 16px; height: 16px; flex-shrink: 0; }
+    .info-bar.yellow {
+      background: var(--amber-soft);
+      color: var(--amber);
+      border: 1px solid rgba(217, 119, 6, 0.2);
+    }
+    .info-bar.blue {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+    }
+    .info-bar .dismiss-info {
+      margin-left: auto;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.15s;
+    }
+    .info-bar .dismiss-info:hover { opacity: 1; }
+
+    /* ===== Page header with action buttons ===== */
+    .schools-page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .schools-page-header h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ===== Needs Attention checkbox ===== */
+    .filter-checkbox-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .filter-checkbox-wrap:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+    .filter-checkbox-wrap input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      margin: 0;
+    }
+    .filter-checkbox-wrap.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-accent);
+    }
+
+    /* ===== Ghost button ===== */
+    .ghost-filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .ghost-filter-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+      border-color: var(--text-muted);
+    }
+    .ghost-filter-btn.active {
+      background: rgba(100,116,139,0.1);
+      border-color: var(--text-muted);
+      color: var(--text-primary);
+    }
+    .ghost-filter-btn i { width: 14px; height: 14px; }
+    .ghost-count {
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--red-soft);
+      color: var(--red);
+      padding: 1px 6px;
+      border-radius: 9999px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* ===== Filters second row ===== */
+    .filters-row-2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 0 16px 0;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <span>MedEdPrep Portal</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Workspace</div>
+        <a href="dashboard-v2.html">
+          <i data-lucide="layout-dashboard"></i>
+          My Day
+        </a>
+        <a href="schools-v2.html" class="active">
+          <i data-lucide="graduation-cap"></i>
+          Schools
+        </a>
+        <a href="outreach.html">
+          <i data-lucide="send"></i>
+          Outreach
+        </a>
+        <div class="sidebar-section-label">Tools</div>
+        <a href="#">
+          <i data-lucide="calendar"></i>
+          Calendar
+        </a>
+        <a href="#">
+          <i data-lucide="settings"></i>
+          Admin
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">JM</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">Jeramey M.</div>
+            <div class="sidebar-user-role">Sales Rep</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN ========== -->
+    <main class="main-area">
+      <header class="header">
+        <div class="header-title">Schools</div>
+        <div class="header-search">
+          <i data-lucide="search"></i>
+          <input type="text" placeholder="Search schools, contacts, deals...">
+        </div>
+        <div class="header-right">
+          <button class="btn-icon"><i data-lucide="bell" style="width:16px;height:16px"></i></button>
+          <div class="header-avatar">JM</div>
+        </div>
+      </header>
+
+      <div class="page-content">
+
+        <!-- Page Header with Action Buttons -->
+        <div class="schools-page-header">
+          <h2>All Schools</h2>
+          <div class="header-actions">
+            <button class="btn btn-outline btn-sm">
+              <i data-lucide="upload" style="width:14px;height:14px"></i>
+              Import Schools
+            </button>
+            <button class="btn btn-primary btn-sm">
+              <i data-lucide="plus" style="width:14px;height:14px"></i>
+              New School
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters Row 1: Search + Dropdowns -->
+        <div class="filters-bar">
+          <input type="text" class="filter-input" id="searchInput" placeholder="Search by name, contact, or state...">
+          <select class="filter-select" id="filterState">
+            <option value="">All States</option>
+            <option value="TX">Texas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="FL">Florida</option>
+            <option value="NY">New York</option>
+            <option value="AZ">Arizona</option>
+            <option value="UT">Utah</option>
+            <option value="KS">Kansas</option>
+            <option value="TN">Tennessee</option>
+            <option value="MN">Minnesota</option>
+            <option value="GA">Georgia</option>
+            <option value="OH">Ohio</option>
+            <option value="WA">Washington</option>
+            <option value="NC">North Carolina</option>
+            <option value="OK">Oklahoma</option>
+          </select>
+          <select class="filter-select" id="filterStage">
+            <option value="">All Stages</option>
+            <option value="Lead">Lead</option>
+            <option value="Prospect">Prospect</option>
+            <option value="Outreach">Outreach</option>
+            <option value="Engaged">Engaged</option>
+            <option value="Demo Scheduled">Demo Scheduled</option>
+            <option value="Proposal Sent">Proposal Sent</option>
+            <option value="Negotiating">Negotiating</option>
+            <option value="Customer">Customer</option>
+          </select>
+          <select class="filter-select" id="filterRep">
+            <option value="">All Reps</option>
+            <option value="Jeramey M.">Jeramey M.</option>
+            <option value="Samantha B.">Samantha B.</option>
+            <option value="Heather K.">Heather K.</option>
+          </select>
+          <select class="filter-select" id="filterLevel">
+            <option value="">All Levels</option>
+            <option value="EMT">EMT</option>
+            <option value="AEMT">AEMT</option>
+            <option value="Paramedic">Paramedic</option>
+          </select>
+          <select class="filter-select" id="filterTags">
+            <option value="">All Tags</option>
+            <option value="Student-Led">Student-Led</option>
+            <option value="Instructor-Led">Instructor-Led</option>
+            <option value="Adaptive">Adaptive</option>
+            <option value="CE">CE</option>
+            <option value="VIP">VIP</option>
+          </select>
+        </div>
+
+        <!-- Filters Row 2: Toggle filters + Saved views + Export -->
+        <div class="filters-row-2">
+          <!-- Platform toggle -->
+          <div class="platform-toggle-group">
+            <button class="platform-toggle active" data-platform="all">All</button>
+            <button class="platform-toggle" data-platform="on">On Platform</button>
+            <button class="platform-toggle" data-platform="off">Not on Platform</button>
+          </div>
+
+          <!-- Needs Attention checkbox -->
+          <label class="filter-checkbox-wrap" id="needsAttentionWrap">
+            <input type="checkbox" id="needsAttention">
+            Needs Attention
+          </label>
+
+          <!-- Ghost filter button -->
+          <button class="ghost-filter-btn" id="ghostFilterBtn">
+            <i data-lucide="ghost"></i>
+            Ghost
+            <span class="ghost-count">1</span>
+          </button>
+
+          <!-- Saved views dropdown -->
+          <div class="saved-views-wrapper">
+            <button class="btn btn-outline btn-sm" id="savedViewsBtn">
+              <i data-lucide="bookmark" style="width:14px;height:14px"></i>
+              Saved Views
+            </button>
+            <div class="saved-views-dropdown" id="savedViewsDropdown">
+              <div class="view-option active" data-view="all">
+                <i data-lucide="list"></i>
+                All Schools
+              </div>
+              <div class="view-option" data-view="mine">
+                <i data-lucide="user"></i>
+                My Schools
+              </div>
+              <div class="view-option" data-view="ghost">
+                <i data-lucide="ghost"></i>
+                Ghost Schools (30+ days)
+              </div>
+              <div class="view-option" data-view="new">
+                <i data-lucide="sparkles"></i>
+                New This Week
+              </div>
+              <div class="view-option" data-view="priority">
+                <i data-lucide="alert-triangle"></i>
+                High Priority
+              </div>
+              <div class="view-option" data-view="expiring">
+                <i data-lucide="clock"></i>
+                Expiring Subs
+              </div>
+              <div class="view-option" data-view="no-activity">
+                <i data-lucide="moon"></i>
+                No Activity (30d)
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-outline btn-sm ml-auto">
+            <i data-lucide="download" style="width:14px;height:14px"></i>
+            Export
+          </button>
+        </div>
+
+        <!-- Info bars for saved views -->
+        <div class="info-bar yellow" id="infoBarExpiring">
+          <i data-lucide="alert-triangle"></i>
+          <span>Showing schools with subscriptions expiring in the next 30 days</span>
+          <span class="dismiss-info" id="dismissExpiring"><i data-lucide="x" style="width:14px;height:14px"></i></span>
+        </div>
+        <div class="info-bar blue" id="infoBarNoActivity">
+          <i data-lucide="moon"></i>
+          <span>Showing linked schools with zero student logins in the last 30 days</span>
+          <span class="dismiss-info" id="dismissNoActivity"><i data-lucide="x" style="width:14px;height:14px"></i></span>
+        </div>
+
+        <!-- Table -->
+        <div class="panel">
+          <div class="panel-body" style="overflow-x: auto;">
+            <table class="data-table" id="schoolsTable">
+              <thead>
+                <tr>
+                  <th class="col-check"><input type="checkbox" id="selectAll"></th>
+                  <th class="sortable" data-sort="name">School Name</th>
+                  <th class="sortable" data-sort="state">State</th>
+                  <th class="sortable" data-sort="stage">Stage</th>
+                  <th class="sortable" data-sort="rep">Assigned To</th>
+                  <th class="sortable" data-sort="activity">Last Activity</th>
+                  <th class="sortable" data-sort="health">Health</th>
+                  <th class="sortable" data-sort="action">Next Action</th>
+                  <th class="sortable col-platform" data-sort="platform">Platform</th>
+                </tr>
+              </thead>
+              <tbody id="schoolsBody">
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <div class="pagination-info" id="paginationInfo">Showing 1&ndash;15 of 247 schools</div>
+            <div class="pagination-controls">
+              <button class="page-btn">&lsaquo;</button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn">3</button>
+              <button class="page-btn">&hellip;</button>
+              <button class="page-btn">17</button>
+              <button class="page-btn">&rsaquo;</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Bulk Action Bar -->
+  <div class="bulk-action-bar" id="bulkBar">
+    <span class="bulk-count" id="bulkCount">0 selected</span>
+    <span class="bulk-separator"></span>
+    <button class="bulk-btn">Assign Rep</button>
+    <button class="bulk-btn">Change Stage</button>
+    <button class="bulk-btn">Export</button>
+    <button class="bulk-dismiss" id="bulkDismiss"><i data-lucide="x" style="width:14px;height:14px"></i></button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // ============================
+    // DATA — 15 rows with platform metadata for composite column
+    // ============================
+    const schools = [
+      // ON PLATFORM — healthy (green)
+      {
+        name: "Riverside Health Sciences", state: "CA", stage: "Customer", rep: "Heather K.",
+        activity: "Onboarding call May 1", activityDate: "2026-05-01", health: 85, action: "Check-in scheduled",
+        region: "western", contact: "Dr. Sarah Chen", level: "Paramedic", tags: ["Student-Led"],
+        onPlatform: true, studentsActive: 120, studentsTotal: 150, mrr: 4200, nremt: 89,
+        platformStatus: "healthy", subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: "Active", lastLogin: "2026-05-10"
+      },
+      {
+        name: "Pacific Northwest EMS College", state: "WA", stage: "Customer", rep: "Heather K.",
+        activity: "QBR call May 2", activityDate: "2026-05-02", health: 91, action: "Renewal prep (Aug)",
+        region: "western", contact: "Dr. Tom Yamamoto", level: "Paramedic", tags: ["Instructor-Led"],
+        onPlatform: true, studentsActive: 200, studentsTotal: 280, mrr: 7800, nremt: 93,
+        platformStatus: "healthy", subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: "Active", lastLogin: "2026-05-11"
+      },
+      {
+        name: "Tri-State Paramedic College", state: "OH", stage: "Customer", rep: "Samantha B.",
+        activity: "Support resolved May 8", activityDate: "2026-05-08", health: 78, action: "Usage review",
+        region: "great-lakes", contact: "Nancy Kowalski", level: "Paramedic", tags: ["Student-Led"],
+        onPlatform: true, studentsActive: 95, studentsTotal: 140, mrr: 3600, nremt: 86,
+        platformStatus: "healthy", subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: "Active", lastLogin: "2026-05-09"
+      },
+      // ON PLATFORM — warning (amber)
+      {
+        name: "Northfield EMS Institute", state: "MN", stage: "Customer", rep: "Jeramey M.",
+        activity: "Check-in May 4", activityDate: "2026-05-04", health: 62, action: "Address usage concerns",
+        region: "great-lakes", contact: "Emily Larson", level: "EMT", tags: ["Adaptive"],
+        onPlatform: true, studentsActive: 22, studentsTotal: 85, mrr: 1800, nremt: 71,
+        platformStatus: "warning", subsExpiring: 15, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: true, platformLabel: "15 exp.", lastLogin: "2026-05-03"
+      },
+      // ON PLATFORM — danger (red)
+      {
+        name: "Valley Medical Training", state: "FL", stage: "Customer", rep: "Samantha B.",
+        activity: "Support ticket May 3", activityDate: "2026-05-03", health: 38, action: "Escalation review",
+        region: "southeast", contact: "Carlos Mendez", level: "AEMT", tags: ["Student-Led"],
+        onPlatform: true, studentsActive: 8, studentsTotal: 45, mrr: 950, nremt: 65,
+        platformStatus: "danger", subsExpiring: 5, subsCancelled: 3, newOnPlatform: false,
+        needsAttention: true, platformLabel: "3 canc.", lastLogin: "2026-04-28"
+      },
+      // ON PLATFORM — danger (inactive)
+      {
+        name: "Heartland Fire Academy", state: "KS", stage: "Customer", rep: "Heather K.",
+        activity: "No login 30+ days", activityDate: "2026-04-10", health: 45, action: "Re-engagement outreach",
+        region: "plains", contact: "Steve Briggs", level: "EMT", tags: [],
+        onPlatform: true, studentsActive: 0, studentsTotal: 30, mrr: 500, nremt: null,
+        platformStatus: "danger", subsExpiring: 8, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: true, platformLabel: "Inactive 30d+", lastLogin: "2026-04-10"
+      },
+      // ON PLATFORM — warning (expiring subs)
+      {
+        name: "Summit County EMS", state: "CO", stage: "Customer", rep: "Jeramey M.",
+        activity: "Renewal discussion May 6", activityDate: "2026-05-06", health: 72, action: "Send renewal quote",
+        region: "rocky-mountain", contact: "Laura DiMaggio", level: "Paramedic", tags: ["Instructor-Led"],
+        onPlatform: true, studentsActive: 55, studentsTotal: 110, mrr: 2450, nremt: 78,
+        platformStatus: "warning", subsExpiring: 22, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: true, platformLabel: "22 exp.", lastLogin: "2026-05-07"
+      },
+      // ON PLATFORM — new (blue badge)
+      {
+        name: "Empire State EMS Academy", state: "NY", stage: "Customer", rep: "Heather K.",
+        activity: "Onboarded May 9", activityDate: "2026-05-09", health: null, action: "Onboarding check-in",
+        region: "east", contact: "Dr. Patricia Adams", level: "Paramedic", tags: ["Student-Led", "VIP"],
+        onPlatform: true, studentsActive: 28, studentsTotal: 60, mrr: 1400, nremt: 82,
+        platformStatus: "new", subsExpiring: 0, subsCancelled: 0, newOnPlatform: true,
+        needsAttention: false, platformLabel: "New", lastLogin: "2026-05-10"
+      },
+      // NOT ON PLATFORM — various stages
+      {
+        name: "Jefferson Community College EMS", state: "TX", stage: "Outreach", rep: "Jeramey M.",
+        activity: "Called May 2 — Voicemail", activityDate: "2026-05-02", health: null, action: "Follow-up call",
+        region: "south-central", contact: "Maria Rodriguez", level: "EMT", tags: [],
+        onPlatform: false, studentsActive: null, studentsTotal: null, mrr: null, nremt: null,
+        platformStatus: null, subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: null, lastLogin: null
+      },
+      {
+        name: "Acme Medic School", state: "CO", stage: "Engaged", rep: "Jeramey M.",
+        activity: "Email reply May 5", activityDate: "2026-05-05", health: null, action: "Schedule demo",
+        region: "rocky-mountain", contact: "Jason Webb", level: "Paramedic", tags: [],
+        onPlatform: false, studentsActive: null, studentsTotal: null, mrr: null, nremt: null,
+        platformStatus: null, subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: null, lastLogin: null
+      },
+      {
+        name: "Southwest Paramedic Institute", state: "AZ", stage: "Lead", rep: "Jeramey M.",
+        activity: "Imported May 4", activityDate: "2026-05-04", health: null, action: "Initial outreach",
+        region: "western", contact: "Angela Torres", level: "Paramedic", tags: [],
+        onPlatform: false, studentsActive: null, studentsTotal: null, mrr: null, nremt: null,
+        platformStatus: null, subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: null, lastLogin: null
+      },
+      {
+        name: "Metro EMS Training Center", state: "TX", stage: "Demo Scheduled", rep: "Heather K.",
+        activity: "Demo booked May 5", activityDate: "2026-05-05", health: null, action: "Demo May 7 at 2pm",
+        region: "south-central", contact: "Robert Nguyen", level: "EMT", tags: [],
+        onPlatform: false, studentsActive: null, studentsTotal: null, mrr: null, nremt: null,
+        platformStatus: null, subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: null, lastLogin: null
+      },
+      {
+        name: "Peach State Paramedic Program", state: "GA", stage: "Prospect", rep: "Jeramey M.",
+        activity: "Demo confirmed May 6", activityDate: "2026-05-06", health: null, action: "Schedule intro call",
+        region: "southeast", contact: "Kevin Brooks", level: "Paramedic", tags: [],
+        onPlatform: false, studentsActive: null, studentsTotal: null, mrr: null, nremt: null,
+        platformStatus: null, subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: null, lastLogin: null
+      },
+      {
+        name: "Buckeye Fire Training", state: "OH", stage: "Negotiating", rep: "Samantha B.",
+        activity: "Contract review May 5", activityDate: "2026-05-05", health: null, action: "Follow-up on redlines",
+        region: "great-lakes", contact: "Rachel Hoffman", level: "AEMT", tags: [],
+        onPlatform: false, studentsActive: null, studentsTotal: null, mrr: null, nremt: null,
+        platformStatus: null, subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: null, lastLogin: null
+      },
+      {
+        name: "Sooner State Medic School", state: "OK", stage: "Lead", rep: "Samantha B.",
+        activity: "Imported May 5", activityDate: "2026-05-05", health: null, action: "Initial outreach",
+        region: "south-central", contact: "Derek Hale", level: "EMT", tags: [],
+        onPlatform: false, studentsActive: null, studentsTotal: null, mrr: null, nremt: null,
+        platformStatus: null, subsExpiring: 0, subsCancelled: 0, newOnPlatform: false,
+        needsAttention: false, platformLabel: null, lastLogin: null
+      },
+    ];
+
+    // ============================
+    // RENDER
+    // ============================
+    const stageColors = {
+      "Lead": "badge-gray",
+      "Prospect": "badge-muted",
+      "Outreach": "badge-blue",
+      "Engaged": "badge-green",
+      "Demo Scheduled": "badge-purple",
+      "Proposal Sent": "badge-amber",
+      "Negotiating": "badge-orange",
+      "Customer": "badge-emerald"
+    };
+
+    function renderHealth(score) {
+      if (score === null) return '<span class="text-muted">&mdash;</span>';
+      let cls = 'health-red';
+      if (score >= 80) cls = 'health-green';
+      else if (score >= 50) cls = 'health-amber';
+      return `<span class="health-score ${cls}"><span class="health-dot"></span> ${score}</span>`;
+    }
+
+    function buildTooltipHtml(school) {
+      if (!school.onPlatform) return '';
+      const students = school.studentsActive !== null
+        ? `${school.studentsActive}/${school.studentsTotal} active`
+        : 'N/A';
+      const mrr = school.mrr !== null
+        ? `$${school.mrr.toLocaleString()}/mo`
+        : 'N/A';
+      const nremt = school.nremt !== null
+        ? `${school.nremt}% pass rate`
+        : 'N/A';
+      let subsLine = 'All healthy';
+      if (school.subsCancelled > 0) subsLine = `${school.subsCancelled} cancelled, ${school.subsExpiring} expiring`;
+      else if (school.subsExpiring > 0) subsLine = `${school.subsExpiring} expiring in 30d`;
+
+      return `<div class="platform-tooltip">
+        <div class="tt-title">MedEdPrep Platform</div>
+        <div class="tt-row"><span class="tt-label">Students:</span> <span class="tt-value">${students}</span></div>
+        <div class="tt-row"><span class="tt-label">MRR:</span> <span class="tt-value">${mrr}</span></div>
+        <div class="tt-row"><span class="tt-label">NREMT:</span> <span class="tt-value">${nremt}</span></div>
+        <div class="tt-row"><span class="tt-label">Subs:</span> <span class="tt-value">${subsLine}</span></div>
+      </div>`;
+    }
+
+    function renderPlatform(school) {
+      if (!school.onPlatform) {
+        return `<span class="platform-indicator none">&mdash;</span>`;
+      }
+
+      const tooltip = buildTooltipHtml(school);
+
+      if (school.newOnPlatform) {
+        return `<div class="platform-tooltip-wrap">
+          <span class="platform-indicator new-link">
+            <i data-lucide="link"></i>
+            <span class="badge-new-platform">New</span>
+          </span>
+          ${tooltip}
+        </div>`;
+      }
+
+      if (school.platformStatus === 'healthy') {
+        return `<div class="platform-tooltip-wrap">
+          <span class="platform-indicator healthy">
+            <span class="platform-dot green"></span>
+            Active
+          </span>
+          ${tooltip}
+        </div>`;
+      }
+
+      if (school.platformStatus === 'warning') {
+        return `<div class="platform-tooltip-wrap">
+          <span class="platform-indicator warning">
+            <span class="platform-dot amber"></span>
+            ${school.platformLabel}
+          </span>
+          ${tooltip}
+        </div>`;
+      }
+
+      if (school.platformStatus === 'danger') {
+        return `<div class="platform-tooltip-wrap">
+          <span class="platform-indicator danger">
+            <span class="platform-dot red"></span>
+            ${school.platformLabel}
+          </span>
+          ${tooltip}
+        </div>`;
+      }
+
+      return `<span class="platform-indicator none">&mdash;</span>`;
+    }
+
+    function renderRow(school) {
+      const badgeClass = stageColors[school.stage] || 'badge-muted';
+      return `
+        <tr data-region="${school.region}" data-name="${school.name.toLowerCase()}" data-state="${school.state}" data-stage="${school.stage}" data-rep="${school.rep}" data-health="${school.health || 0}" data-activity="${school.activityDate}" data-action="${school.action.toLowerCase()}" data-contact="${school.contact.toLowerCase()}">
+          <td class="col-check"><input type="checkbox" class="row-check"></td>
+          <td><a href="platform-tab.html" class="school-link">${school.name}</a></td>
+          <td>${school.state}</td>
+          <td><span class="badge ${badgeClass}">${school.stage}</span></td>
+          <td>${school.rep}</td>
+          <td>${school.activity}</td>
+          <td>${renderHealth(school.health)}</td>
+          <td>${school.action}</td>
+          <td class="col-platform">${renderPlatform(school)}</td>
+        </tr>`;
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('schoolsBody');
+      tbody.innerHTML = data.map(renderRow).join('');
+      document.getElementById('paginationInfo').innerHTML = `Showing 1&ndash;${data.length} of ${data.length} schools`;
+      updateBulkBar();
+      lucide.createIcons();
+    }
+
+    // Initial render
+    let currentData = [...schools];
+    renderTable(currentData);
+
+    // ============================
+    // SORTING
+    // ============================
+    let sortCol = null;
+    let sortDir = 'asc';
+
+    function getSortValue(school, col) {
+      switch(col) {
+        case 'name': return school.name.toLowerCase();
+        case 'state': return school.state;
+        case 'stage': return school.stage;
+        case 'rep': return school.rep;
+        case 'activity': return school.activityDate;
+        case 'health': return school.health || 0;
+        case 'action': return school.action.toLowerCase();
+        case 'platform':
+          if (!school.onPlatform) return 0;
+          if (school.platformStatus === 'danger') return 4;
+          if (school.platformStatus === 'warning') return 3;
+          if (school.newOnPlatform) return 2;
+          return 1;
+        default: return 0;
+      }
+    }
+
+    function sortData(data) {
+      if (!sortCol) return data;
+      return [...data].sort((a, b) => {
+        const valA = getSortValue(a, sortCol);
+        const valB = getSortValue(b, sortCol);
+        if (valA < valB) return sortDir === 'asc' ? -1 : 1;
+        if (valA > valB) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
+    document.querySelectorAll('.data-table th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.dataset.sort;
+        if (sortCol === col) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortCol = col;
+          sortDir = 'asc';
+        }
+        document.querySelectorAll('.data-table th.sortable').forEach(h => h.classList.remove('asc', 'desc'));
+        th.classList.add(sortDir);
+
+        currentData = sortData(currentData);
+        renderTable(currentData);
+      });
+    });
+
+    // ============================
+    // FILTERING
+    // ============================
+    let platformFilter = 'all';
+    let ghostFilter = false;
+    let needsAttentionFilter = false;
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const state = document.getElementById('filterState').value;
+      const stage = document.getElementById('filterStage').value;
+      const rep = document.getElementById('filterRep').value;
+      const level = document.getElementById('filterLevel').value;
+      const tags = document.getElementById('filterTags').value;
+
+      currentData = schools.filter(s => {
+        if (search && !s.name.toLowerCase().includes(search) && !s.contact.toLowerCase().includes(search) && !s.state.toLowerCase().includes(search)) return false;
+        if (state && s.state !== state) return false;
+        if (stage && s.stage !== stage) return false;
+        if (rep && s.rep !== rep) return false;
+        if (level && s.level !== level) return false;
+        if (tags && !s.tags.includes(tags)) return false;
+        if (platformFilter === 'on' && !s.onPlatform) return false;
+        if (platformFilter === 'off' && s.onPlatform) return false;
+        if (needsAttentionFilter && !s.needsAttention) return false;
+        if (ghostFilter && s.activityDate > '2026-04-12') return false;
+        return true;
+      });
+
+      currentData = sortData(currentData);
+      renderTable(currentData);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('filterState').addEventListener('change', applyFilters);
+    document.getElementById('filterStage').addEventListener('change', applyFilters);
+    document.getElementById('filterRep').addEventListener('change', applyFilters);
+    document.getElementById('filterLevel').addEventListener('change', applyFilters);
+    document.getElementById('filterTags').addEventListener('change', applyFilters);
+
+    // ============================
+    // PLATFORM TOGGLE
+    // ============================
+    document.querySelectorAll('.platform-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.platform-toggle').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        platformFilter = btn.dataset.platform;
+        applyFilters();
+      });
+    });
+
+    // ============================
+    // NEEDS ATTENTION CHECKBOX
+    // ============================
+    const needsAttentionCheckbox = document.getElementById('needsAttention');
+    const needsAttentionWrap = document.getElementById('needsAttentionWrap');
+
+    needsAttentionCheckbox.addEventListener('change', () => {
+      needsAttentionFilter = needsAttentionCheckbox.checked;
+      needsAttentionWrap.classList.toggle('active', needsAttentionFilter);
+      applyFilters();
+    });
+
+    // ============================
+    // GHOST FILTER
+    // ============================
+    const ghostFilterBtn = document.getElementById('ghostFilterBtn');
+    ghostFilterBtn.addEventListener('click', () => {
+      ghostFilter = !ghostFilter;
+      ghostFilterBtn.classList.toggle('active', ghostFilter);
+      applyFilters();
+    });
+
+    // ============================
+    // SAVED VIEWS
+    // ============================
+    const savedViewsBtn = document.getElementById('savedViewsBtn');
+    const savedViewsDropdown = document.getElementById('savedViewsDropdown');
+    const infoBarExpiring = document.getElementById('infoBarExpiring');
+    const infoBarNoActivity = document.getElementById('infoBarNoActivity');
+
+    savedViewsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      savedViewsDropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', () => {
+      savedViewsDropdown.classList.remove('open');
+    });
+
+    function hideInfoBars() {
+      infoBarExpiring.classList.remove('visible');
+      infoBarNoActivity.classList.remove('visible');
+    }
+
+    function resetAllFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('filterState').value = '';
+      document.getElementById('filterStage').value = '';
+      document.getElementById('filterRep').value = '';
+      document.getElementById('filterLevel').value = '';
+      document.getElementById('filterTags').value = '';
+      platformFilter = 'all';
+      ghostFilter = false;
+      needsAttentionFilter = false;
+      needsAttentionCheckbox.checked = false;
+      needsAttentionWrap.classList.remove('active');
+      ghostFilterBtn.classList.remove('active');
+      document.querySelectorAll('.platform-toggle').forEach(b => b.classList.remove('active'));
+      document.querySelector('.platform-toggle[data-platform="all"]').classList.add('active');
+    }
+
+    document.getElementById('dismissExpiring').addEventListener('click', () => {
+      infoBarExpiring.classList.remove('visible');
+    });
+    document.getElementById('dismissNoActivity').addEventListener('click', () => {
+      infoBarNoActivity.classList.remove('visible');
+    });
+
+    document.querySelectorAll('.view-option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.view-option').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        savedViewsDropdown.classList.remove('open');
+        hideInfoBars();
+        resetAllFilters();
+
+        const view = opt.dataset.view;
+
+        switch(view) {
+          case 'all':
+            currentData = [...schools];
+            break;
+          case 'mine':
+            document.getElementById('filterRep').value = 'Jeramey M.';
+            currentData = schools.filter(s => s.rep === 'Jeramey M.');
+            break;
+          case 'ghost':
+            ghostFilter = true;
+            ghostFilterBtn.classList.add('active');
+            currentData = schools.filter(s => s.activityDate <= '2026-04-12');
+            break;
+          case 'new':
+            currentData = schools.filter(s => s.activityDate >= '2026-05-04');
+            break;
+          case 'priority':
+            currentData = schools.filter(s => (s.health !== null && s.health < 60) || s.stage === 'Negotiating' || s.stage === 'Proposal Sent');
+            break;
+          case 'expiring':
+            currentData = schools.filter(s => s.onPlatform && s.subsExpiring > 0);
+            currentData.sort((a, b) => (b.subsExpiring || 0) - (a.subsExpiring || 0));
+            infoBarExpiring.classList.add('visible');
+            break;
+          case 'no-activity':
+            currentData = schools.filter(s => s.onPlatform && s.studentsActive === 0);
+            infoBarNoActivity.classList.add('visible');
+            break;
+        }
+
+        if (view !== 'expiring') {
+          currentData = sortData(currentData);
+        }
+        renderTable(currentData);
+      });
+    });
+
+    // ============================
+    // BULK ACTIONS
+    // ============================
+    const bulkBar = document.getElementById('bulkBar');
+    const bulkCount = document.getElementById('bulkCount');
+    const selectAll = document.getElementById('selectAll');
+
+    function updateBulkBar() {
+      const checked = document.querySelectorAll('.row-check:checked').length;
+      if (checked > 0) {
+        bulkBar.classList.add('visible');
+        bulkCount.textContent = `${checked} selected`;
+      } else {
+        bulkBar.classList.remove('visible');
+      }
+      const allChecks = document.querySelectorAll('.row-check');
+      selectAll.checked = allChecks.length > 0 && checked === allChecks.length;
+      selectAll.indeterminate = checked > 0 && checked < allChecks.length;
+    }
+
+    document.getElementById('schoolsBody').addEventListener('change', (e) => {
+      if (e.target.classList.contains('row-check')) {
+        updateBulkBar();
+      }
+    });
+
+    selectAll.addEventListener('change', () => {
+      const checks = document.querySelectorAll('.row-check');
+      checks.forEach(c => c.checked = selectAll.checked);
+      updateBulkBar();
+    });
+
+    document.getElementById('bulkDismiss').addEventListener('click', () => {
+      document.querySelectorAll('.row-check').forEach(c => c.checked = false);
+      selectAll.checked = false;
+      updateBulkBar();
+    });
+
+    // ============================
+    // ROW CLICK NAVIGATION
+    // ============================
+    document.getElementById('schoolsBody').addEventListener('click', (e) => {
+      if (e.target.type === 'checkbox' || e.target.tagName === 'A' || e.target.closest('a')) return;
+      const row = e.target.closest('tr');
+      if (row) window.location.href = 'school-hub.html';
+    });
+
+    // Re-init Lucide icons after dynamic render
+    lucide.createIcons();
+  </script>
+</body>
+</html>
