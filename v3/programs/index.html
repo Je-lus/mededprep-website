@@ -1,0 +1,1301 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- COMMON META TAG -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#53B6CD">
+
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<link rel="canonical" href="https://www.mededprep.com/v3/programs/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Programs — MedEdPrep Institutional Access for EMS Education" />
+	<meta property="og:description" content="Institutional EMS education platform with analytics, clinical tracking, exam tools, and state designation support. Trusted by the Georgia Trauma Commission." />
+	<meta property="og:url" content="https://www.mededprep.com/v3/programs/" />
+	<meta property="og:site_name" content="MedEdPrep" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<link rel='stylesheet' id='bootstrap-css' href='../../wp-content/themes/theme-mededprep/assets/css/bootstrap.min.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='swiper-css' href='../../wp-content/themes/theme-mededprep/assets/css/swiper.min.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='aos-css' href='../../wp-content/themes/theme-mededprep/assets/css/aos.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='line-awesome-css' href='../../wp-content/themes/theme-mededprep/assets/css/line-awesome.min.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='style-css' href='../../wp-content/themes/theme-mededprep/assets/css/style.css' type='text/css' media='all' />
+	<script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/jquery-1.12.4.min.js" id="jquery-js"></script>
+
+	<link rel="icon" href="../../wp-content/uploads/2022/06/favicon.ico" sizes="32x32" />
+	<link rel="icon" href="../../wp-content/uploads/2022/06/favicon.ico" sizes="192x192" />
+	<link rel="apple-touch-icon" href="../../wp-content/uploads/2022/06/favicon.ico" />
+
+	<title>Programs — MedEdPrep Institutional Access for EMS Education</title>
+
+	<style>
+		/* ============================================
+		   ENTERPRISE / INSTITUTIONAL STYLE OVERRIDE
+		   MedEdPrep Programs Page — v3
+		   ============================================ */
+
+		:root {
+			--navy: #0f1b2d;
+			--navy-light: #1a2a42;
+			--teal: #53B6CD;
+			--teal-dark: #3a9bb2;
+			--gold: #D4A843;
+			--gold-light: #e6c36e;
+			--light-gray: #f4f6f8;
+			--white: #ffffff;
+			--text-dark: #1a1a2e;
+			--text-muted: #5a6577;
+			--border-light: #e2e6ec;
+		}
+
+		/* === GLOBAL OVERRIDES === */
+		body {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			color: var(--text-dark);
+			background: var(--white);
+		}
+
+		.programs-page h1,
+		.programs-page h2,
+		.programs-page h3,
+		.programs-page h4,
+		.programs-page h5,
+		.programs-page h6 {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			font-weight: 700;
+			color: var(--navy);
+		}
+
+		.programs-page p {
+			line-height: 1.7;
+			color: var(--text-muted);
+		}
+
+		/* === BUTTONS === */
+		.btn-enterprise {
+			display: inline-block;
+			padding: 14px 32px;
+			font-size: 16px;
+			font-weight: 600;
+			border-radius: 6px;
+			text-decoration: none;
+			transition: all 0.25s ease;
+			border: none;
+			cursor: pointer;
+		}
+
+		.btn-enterprise-primary {
+			background: var(--teal);
+			color: var(--white);
+		}
+
+		.btn-enterprise-primary:hover {
+			background: var(--teal-dark);
+			color: var(--white);
+			text-decoration: none;
+			transform: translateY(-1px);
+			box-shadow: 0 4px 12px rgba(83, 182, 205, 0.35);
+		}
+
+		.btn-enterprise-secondary {
+			background: transparent;
+			color: var(--white);
+			border: 2px solid rgba(255,255,255,0.5);
+		}
+
+		.btn-enterprise-secondary:hover {
+			border-color: var(--white);
+			color: var(--white);
+			text-decoration: none;
+			background: rgba(255,255,255,0.08);
+		}
+
+		.btn-enterprise-outline {
+			background: transparent;
+			color: var(--teal);
+			border: 2px solid var(--teal);
+		}
+
+		.btn-enterprise-outline:hover {
+			background: var(--teal);
+			color: var(--white);
+			text-decoration: none;
+		}
+
+		/* === HERO === */
+		.hero-enterprise {
+			background: var(--navy);
+			padding: 100px 0 80px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.hero-enterprise::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: linear-gradient(135deg, rgba(15,27,45,1) 0%, rgba(26,42,66,1) 50%, rgba(15,27,45,1) 100%);
+			z-index: 0;
+		}
+
+		.hero-enterprise .container {
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero-enterprise h1 {
+			font-size: 2.75rem;
+			font-weight: 800;
+			color: var(--white);
+			line-height: 1.2;
+			margin-bottom: 24px;
+			max-width: 720px;
+		}
+
+		.hero-enterprise .hero-sub {
+			font-size: 1.2rem;
+			color: rgba(255,255,255,0.8);
+			line-height: 1.7;
+			max-width: 640px;
+			margin-bottom: 36px;
+		}
+
+		.hero-enterprise .btn-group-hero {
+			display: flex;
+			gap: 16px;
+			flex-wrap: wrap;
+		}
+
+		/* === TRUST BAR === */
+		.trust-bar {
+			background: var(--navy-light);
+			border-top: 1px solid rgba(255,255,255,0.08);
+			border-bottom: 1px solid rgba(255,255,255,0.08);
+			padding: 28px 0;
+		}
+
+		.trust-badge {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			text-align: center;
+			padding: 8px 0;
+		}
+
+		.trust-badge .badge-icon {
+			width: 28px;
+			height: 28px;
+			background: var(--gold);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+
+		.trust-badge .badge-icon svg {
+			width: 14px;
+			height: 14px;
+			fill: var(--navy);
+		}
+
+		.trust-badge span {
+			font-size: 14px;
+			font-weight: 600;
+			color: rgba(255,255,255,0.9);
+			letter-spacing: 0.02em;
+			text-transform: uppercase;
+		}
+
+		/* === SECTIONS === */
+		.section-enterprise {
+			padding: 80px 0;
+		}
+
+		.section-enterprise.bg-light-gray {
+			background: var(--light-gray);
+		}
+
+		.section-enterprise .section-heading {
+			font-size: 2rem;
+			font-weight: 800;
+			color: var(--navy);
+			margin-bottom: 16px;
+		}
+
+		.section-enterprise .section-subheading {
+			font-size: 1.1rem;
+			color: var(--text-muted);
+			max-width: 640px;
+			margin-bottom: 48px;
+		}
+
+		.section-enterprise .section-subheading.centered {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		/* === FEATURE CARDS (Why Programs Choose Us) === */
+		.feature-card {
+			background: var(--white);
+			border: 1px solid var(--border-light);
+			border-radius: 8px;
+			padding: 36px 28px;
+			height: 100%;
+			transition: border-color 0.2s ease;
+		}
+
+		.feature-card:hover {
+			border-color: var(--teal);
+		}
+
+		.bg-light-gray .feature-card {
+			background: var(--white);
+		}
+
+		.feature-card .card-number {
+			width: 40px;
+			height: 40px;
+			background: var(--navy);
+			color: var(--white);
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 700;
+			font-size: 16px;
+			margin-bottom: 20px;
+		}
+
+		.feature-card h3 {
+			font-size: 1.25rem;
+			font-weight: 700;
+			margin-bottom: 12px;
+			color: var(--navy);
+		}
+
+		.feature-card p {
+			font-size: 15px;
+			line-height: 1.7;
+			color: var(--text-muted);
+			margin-bottom: 0;
+		}
+
+		/* === WHAT'S INCLUDED === */
+		.included-item {
+			display: flex;
+			gap: 16px;
+			margin-bottom: 32px;
+		}
+
+		.included-item .check-icon {
+			flex-shrink: 0;
+			width: 24px;
+			height: 24px;
+			background: var(--teal);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-top: 2px;
+		}
+
+		.included-item .check-icon svg {
+			width: 12px;
+			height: 12px;
+			fill: var(--white);
+		}
+
+		.included-item h4 {
+			font-size: 1.05rem;
+			font-weight: 700;
+			margin-bottom: 6px;
+			color: var(--navy);
+		}
+
+		.included-item p {
+			font-size: 15px;
+			color: var(--text-muted);
+			margin-bottom: 0;
+		}
+
+		/* === TIMELINE (Implementation) === */
+		.timeline-enterprise {
+			display: flex;
+			gap: 0;
+			position: relative;
+			margin-top: 48px;
+		}
+
+		.timeline-step {
+			flex: 1;
+			text-align: center;
+			position: relative;
+			padding: 0 16px;
+		}
+
+		.timeline-step .step-number {
+			width: 48px;
+			height: 48px;
+			background: var(--navy);
+			color: var(--white);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 700;
+			font-size: 18px;
+			margin: 0 auto 16px;
+			position: relative;
+			z-index: 2;
+		}
+
+		.timeline-step::before {
+			content: '';
+			position: absolute;
+			top: 24px;
+			left: 0;
+			right: 0;
+			height: 2px;
+			background: var(--border-light);
+			z-index: 1;
+		}
+
+		.timeline-step:first-child::before {
+			left: 50%;
+		}
+
+		.timeline-step:last-child::before {
+			right: 50%;
+		}
+
+		.timeline-step h4 {
+			font-size: 1rem;
+			font-weight: 700;
+			color: var(--navy);
+			margin-bottom: 8px;
+		}
+
+		.timeline-step p {
+			font-size: 14px;
+			color: var(--text-muted);
+			margin-bottom: 0;
+		}
+
+		/* Timeline responsive */
+		@media (max-width: 767px) {
+			.timeline-enterprise {
+				flex-direction: column;
+				gap: 32px;
+			}
+
+			.timeline-step {
+				display: flex;
+				text-align: left;
+				gap: 16px;
+				padding: 0;
+			}
+
+			.timeline-step .step-number {
+				margin: 0;
+				flex-shrink: 0;
+			}
+
+			.timeline-step::before {
+				display: none;
+			}
+
+			.timeline-step .step-content {
+				flex: 1;
+			}
+		}
+
+		/* === DATA & COMPLIANCE === */
+		.compliance-list {
+			list-style: none;
+			padding: 0;
+			margin: 0 0 32px;
+		}
+
+		.compliance-list li {
+			display: flex;
+			align-items: flex-start;
+			gap: 12px;
+			padding: 10px 0;
+			font-size: 15px;
+			color: var(--text-muted);
+			border-bottom: 1px solid var(--border-light);
+		}
+
+		.compliance-list li:last-child {
+			border-bottom: none;
+		}
+
+		.compliance-list li .shield-icon {
+			flex-shrink: 0;
+			color: var(--teal);
+			margin-top: 2px;
+		}
+
+		/* === PRICING CARDS === */
+		.pricing-card-enterprise {
+			background: var(--white);
+			border: 1px solid var(--border-light);
+			border-radius: 8px;
+			padding: 40px 32px;
+			text-align: center;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			transition: border-color 0.2s ease;
+		}
+
+		.pricing-card-enterprise:hover {
+			border-color: var(--teal);
+		}
+
+		.pricing-card-enterprise .pricing-label {
+			font-size: 13px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: var(--teal);
+			margin-bottom: 8px;
+		}
+
+		.pricing-card-enterprise .pricing-amount {
+			font-size: 2.5rem;
+			font-weight: 800;
+			color: var(--navy);
+			line-height: 1.1;
+			margin-bottom: 4px;
+		}
+
+		.pricing-card-enterprise .pricing-period {
+			font-size: 14px;
+			color: var(--text-muted);
+			margin-bottom: 20px;
+		}
+
+		.pricing-card-enterprise .pricing-desc {
+			font-size: 15px;
+			color: var(--text-muted);
+			line-height: 1.6;
+			margin-bottom: 28px;
+			flex: 1;
+		}
+
+		.pricing-card-enterprise.featured {
+			border-color: var(--teal);
+			box-shadow: 0 4px 20px rgba(83, 182, 205, 0.15);
+		}
+
+		.pricing-card-enterprise.featured .pricing-label {
+			background: var(--teal);
+			color: var(--white);
+			display: inline-block;
+			padding: 4px 16px;
+			border-radius: 20px;
+		}
+
+		/* === STAT CALLOUT === */
+		.stat-callout-row {
+			display: flex;
+			gap: 24px;
+			flex-wrap: wrap;
+			margin-top: 40px;
+		}
+
+		.stat-callout {
+			background: var(--navy);
+			border-radius: 8px;
+			padding: 28px 24px;
+			flex: 1;
+			min-width: 200px;
+			text-align: center;
+		}
+
+		.stat-callout .stat-number {
+			font-size: 2.5rem;
+			font-weight: 800;
+			color: var(--white);
+			line-height: 1;
+			margin-bottom: 8px;
+		}
+
+		.stat-callout .stat-label {
+			font-size: 14px;
+			color: rgba(255,255,255,0.7);
+			margin-bottom: 0;
+		}
+
+		/* === CASE STUDY / PLACEHOLDER === */
+		.case-study-placeholder {
+			background: var(--light-gray);
+			border: 2px dashed var(--border-light);
+			border-radius: 8px;
+			padding: 48px 32px;
+			text-align: center;
+		}
+
+		.case-study-placeholder h4 {
+			color: var(--text-muted);
+			font-size: 1.1rem;
+			margin-bottom: 12px;
+		}
+
+		.case-study-placeholder p {
+			color: var(--text-muted);
+			font-size: 15px;
+			max-width: 520px;
+			margin: 0 auto;
+		}
+
+		/* === ONE-PAGER CALLOUT === */
+		.one-pager-callout {
+			background: var(--navy);
+			border-radius: 8px;
+			padding: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 24px;
+			flex-wrap: wrap;
+		}
+
+		.one-pager-callout .callout-text h4 {
+			color: var(--white);
+			font-size: 1.1rem;
+			margin-bottom: 4px;
+		}
+
+		.one-pager-callout .callout-text p {
+			color: rgba(255,255,255,0.7);
+			font-size: 14px;
+			margin-bottom: 0;
+		}
+
+		/* === FINAL CTA === */
+		.cta-enterprise {
+			background: var(--navy);
+			padding: 80px 0;
+			text-align: center;
+		}
+
+		.cta-enterprise h2 {
+			color: var(--white);
+			font-size: 2rem;
+			margin-bottom: 16px;
+		}
+
+		.cta-enterprise p {
+			color: rgba(255,255,255,0.75);
+			font-size: 1.1rem;
+			max-width: 600px;
+			margin: 0 auto 36px;
+		}
+
+		.cta-enterprise .btn-group-cta {
+			display: flex;
+			gap: 16px;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+
+		/* === FOOTER OVERRIDES === */
+		.footer-newsletter {
+			margin-bottom: 16px;
+		}
+
+		.footer-newsletter p {
+			font-size: 14px;
+			color: rgba(255,255,255,0.6);
+			margin-bottom: 12px;
+		}
+
+		.footer-newsletter form {
+			display: flex;
+			gap: 8px;
+			max-width: 400px;
+		}
+
+		.footer-newsletter input[type="email"] {
+			flex: 1;
+			padding: 10px 14px;
+			border-radius: 6px;
+			border: 1px solid rgba(255,255,255,0.2);
+			background: rgba(255,255,255,0.08);
+			color: var(--white);
+			font-size: 14px;
+		}
+
+		.footer-newsletter input[type="email"]::placeholder {
+			color: rgba(255,255,255,0.4);
+		}
+
+		.footer-newsletter button {
+			padding: 10px 20px;
+			background: var(--teal);
+			color: var(--white);
+			border: none;
+			border-radius: 6px;
+			font-size: 14px;
+			font-weight: 600;
+			cursor: pointer;
+		}
+
+		/* === NAV ACTIVE STATE === */
+		.programs-active-link {
+			color: var(--teal) !important;
+			font-weight: 600;
+		}
+
+		/* === RESPONSIVE === */
+		@media (max-width: 991px) {
+			.hero-enterprise {
+				padding: 80px 0 60px;
+			}
+
+			.hero-enterprise h1 {
+				font-size: 2rem;
+			}
+
+			.section-enterprise {
+				padding: 60px 0;
+			}
+		}
+
+		@media (max-width: 575px) {
+			.hero-enterprise h1 {
+				font-size: 1.75rem;
+			}
+
+			.section-enterprise .section-heading {
+				font-size: 1.5rem;
+			}
+
+			.stat-callout-row {
+				flex-direction: column;
+			}
+
+			.one-pager-callout {
+				text-align: center;
+				justify-content: center;
+			}
+		}
+	</style>
+</head>
+
+<body>
+   <!-- overlay -->
+   <div class="overlay"></div>
+   <!-- overlay -->
+   <div class="main-website programs-page">
+      <div class="gradient-effect-top-bg">
+         <!-- wraper-header -->
+         <header class="wraper-header">
+            <div class="container-fluid">
+               <nav class="navbar navbar-expand-lg ">
+                  <a class="navbar-brand" href="../../index.html">
+                        <img
+                           src="../../wp-content/uploads/2022/06/logo-2.svg"
+                           alt="MedEdPrep Logo"
+                           width="170"
+                           height="41"
+                        >
+                  </a>
+                  <div class="mx-auto main-nav" id="sidebar">
+                     <ul id="navbar-nav mx-auto menu" class="">
+                        <li class="menu-item"><a href="../features/index.html">Features</a></li>
+                        <li class="menu-item"><a href="../price/index.html">Pricing</a></li>
+                        <li class="menu-item"><a href="../about/index.html">About</a></li>
+                        <li class="menu-item"><a href="../../resources/index.html">Resources</a></li>
+                        <li class="menu-item current-menu-item"><a href="index.html" class="programs-active-link" aria-current="page">Programs</a></li>
+                        <li class="menu-item"><a href="../contact/index.html">Contact</a></li>
+                     </ul>
+                  </div>
+                  <div class="d-flex">
+                     <div class=" d-none d-lg-flex align-items-center">
+                        <p class="welcome-text">
+                           <div class=" d-none d-lg-flex">
+                              <a class="nav-link btn btn-bordered-yellow me-2" href="https://student.mededprep.com/" target="">Sign In</a>
+                              <a class="nav-link btn btn-bg-yellow" href="https://student.mededprep.com/signup" target="">Sign Up</a>
+                           </div>
+                        </p>
+                     </div>
+                     <div class="hamburger-lang-holder  d-lg-none">
+                        <button onclick="mMenuToggle()" class="d-inline-md-block d-lg-none btn py-0" id="sidebarCollapse"
+                           type="button">
+                           <img src="../../wp-content/themes/theme-mededprep/assets/images/icon/hamburger-menu.svg" alt="Menu">
+                        </button>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+         </header>
+
+         <!-- wraper-mobile-header -->
+         <div class="wraper-mobile-header">
+            <div class="mobile-header d-flex flex-column">
+               <div class="mobile-header-top w-100 mb-5">
+                  <div class=" mb-5">
+                     <div class="d-flex justify-content-between align-items-center">
+                        <div class="brand-logo d-inline-block">
+                           <a href="../../index.html">
+                              <img
+                                 src="../../wp-content/uploads/2022/06/logo-2.svg"
+                                 alt="MedEdPrep Logo"
+                                 width="170"
+                                 height="41"
+                              >
+                           </a>
+                        </div>
+                        <button type="button" class="mobile-menu-close mobileMenuClose d-inline-block p-0"
+                           onclick="mMenuToggle()">
+                           <img src="../../wp-content/themes/theme-mededprep/assets/images/icon/close.svg" alt="Close menu" class="menu-close">
+                        </button>
+                     </div>
+                  </div>
+                  <div class="mobile-header-menu">
+                     <ul id="menu-header-menu-1" class="menu">
+                        <li class="menu-item"><a href="../features/index.html">Features</a></li>
+                        <li class="menu-item"><a href="../price/index.html">Pricing</a></li>
+                        <li class="menu-item"><a href="../about/index.html">About</a></li>
+                        <li class="menu-item"><a href="../../resources/index.html">Resources</a></li>
+                        <li class="menu-item current-menu-item"><a href="index.html" aria-current="page">Programs</a></li>
+                        <li class="menu-item"><a href="../contact/index.html">Contact</a></li>
+                     </ul>
+                     <div class="mt-4 d-flex flex-wrap">
+                        <p class="welcome-text w-100">
+                           <div class=" d-flex">
+                              <a class="nav-link btn btn-bordered-yellow me-2" href="https://student.mededprep.com/" target="">Sign In</a>
+                              <a class="nav-link btn btn-bg-yellow" href="https://student.mededprep.com/signup" target="">Sign Up</a>
+                           </div>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- wraper-mobile-header -->
+         <div class="header-gap-wraper"></div>
+
+      </div>
+      <!-- close gradient-effect-top-bg -->
+
+      <!-- =============================================
+           HERO SECTION
+           ============================================= -->
+      <section class="hero-enterprise">
+         <div class="container">
+            <div class="row align-items-center">
+               <div class="col-12 col-lg-8">
+                  <h1 data-aos="fade-up" data-aos-duration="500">Your Pass Rates Are Your Reputation. We Help You Prove It.</h1>
+                  <p class="hero-sub" data-aos="fade-up" data-aos-duration="600">MedEdPrep gives EMS programs the analytics, clinical tracking, and exam tools they need — plus designation support from people who used to run the process.</p>
+                  <div class="btn-group-hero" data-aos="fade-up" data-aos-duration="700">
+                     <a href="../contact/index.html" class="btn-enterprise btn-enterprise-primary">Schedule a Demo</a>
+                     <a href="../price/index.html" class="btn-enterprise btn-enterprise-secondary">See Pricing</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- =============================================
+           TRUST / CREDENTIAL BAR
+           ============================================= -->
+      <div class="trust-bar">
+         <div class="container">
+            <div class="row">
+               <div class="col-6 col-md-3">
+                  <div class="trust-badge">
+                     <div class="badge-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                     </div>
+                     <span>Contracted by GA Trauma Commission</span>
+                  </div>
+               </div>
+               <div class="col-6 col-md-3">
+                  <div class="trust-badge">
+                     <div class="badge-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                     </div>
+                     <span>GA Board of Education Approved</span>
+                  </div>
+               </div>
+               <div class="col-6 col-md-3">
+                  <div class="trust-badge">
+                     <div class="badge-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                     </div>
+                     <span>CAPCE Accredited</span>
+                  </div>
+               </div>
+               <div class="col-6 col-md-3">
+                  <div class="trust-badge">
+                     <div class="badge-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                     </div>
+                     <span>100+ Programs Served</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- =============================================
+           WHY PROGRAMS CHOOSE MEDEDPREP
+           ============================================= -->
+      <section class="section-enterprise bg-light-gray">
+         <div class="container">
+            <div class="text-center">
+               <h2 class="section-heading" data-aos="fade-up" data-aos-duration="500">Why Programs Choose MedEdPrep</h2>
+               <p class="section-subheading centered" data-aos="fade-up" data-aos-duration="600">Built for the people who are accountable for outcomes.</p>
+            </div>
+            <div class="row g-4">
+               <div class="col-12 col-md-4" data-aos="fade-up" data-aos-duration="500">
+                  <div class="feature-card">
+                     <div class="card-number">1</div>
+                     <h3>See Everything</h3>
+                     <p>200+ data points per student. Track performance across every category, every cohort, every semester. Know exactly where your program stands — before your accreditor asks.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-md-4" data-aos="fade-up" data-aos-duration="600">
+                  <div class="feature-card">
+                     <div class="card-number">2</div>
+                     <h3>Prove Everything</h3>
+                     <p>Pass rate trends, competency completion, clinical progress. Generate the reports your state agency and accreditor actually need, in the format they expect.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-md-4" data-aos="fade-up" data-aos-duration="700">
+                  <div class="feature-card">
+                     <div class="card-number">3</div>
+                     <h3>Fix Everything</h3>
+                     <p>Identify at-risk students early. Targeted remediation based on actual performance data, not gut feeling. Programs using MedEdPrep see 20% higher NREMT pass rates.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- =============================================
+           WHAT'S INCLUDED
+           ============================================= -->
+      <section class="section-enterprise">
+         <div class="container">
+            <div class="text-center">
+               <h2 class="section-heading" data-aos="fade-up" data-aos-duration="500">One Platform, Everything Your Program Needs</h2>
+               <p class="section-subheading centered" data-aos="fade-up" data-aos-duration="600">Stop stitching together spreadsheets, separate exam tools, and paper sign-off sheets.</p>
+            </div>
+            <div class="row">
+               <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-duration="500">
+                  <div class="included-item">
+                     <div class="check-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                     </div>
+                     <div>
+                        <h4>Student Test Prep</h4>
+                        <p>Adaptive learning, NREMT simulation, TEI questions, and the largest EMS question bank.</p>
+                     </div>
+                  </div>
+                  <div class="included-item">
+                     <div class="check-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                     </div>
+                     <div>
+                        <h4>Instructor Exam Tools</h4>
+                        <p>Build custom exams and standardized exit exams. Item-level analysis, question-level reporting.</p>
+                     </div>
+                  </div>
+                  <div class="included-item">
+                     <div class="check-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                     </div>
+                     <div>
+                        <h4>Clinical Tracking</h4>
+                        <p>Track rotations, competencies, and preceptor evaluations. No spreadsheets.</p>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-duration="600">
+                  <div class="included-item">
+                     <div class="check-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                     </div>
+                     <div>
+                        <h4>Lab Competency Tracking</h4>
+                        <p>Sign-offs, progress monitoring, automated compliance verification.</p>
+                     </div>
+                  </div>
+                  <div class="included-item">
+                     <div class="check-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                     </div>
+                     <div>
+                        <h4>Gradebook</h4>
+                        <p>Integrated with exams and tracking. One source of truth.</p>
+                     </div>
+                  </div>
+                  <div class="included-item">
+                     <div class="check-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                     </div>
+                     <div>
+                        <h4>CoAssist — State Designation Support</h4>
+                        <p>Compliance tools and hands-on support from people who used to run the state designation process.</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- =============================================
+           IMPLEMENTATION TIMELINE
+           ============================================= -->
+      <section class="section-enterprise bg-light-gray">
+         <div class="container">
+            <div class="text-center">
+               <h2 class="section-heading" data-aos="fade-up" data-aos-duration="500">Getting Started Is Simple</h2>
+               <p class="section-subheading centered" data-aos="fade-up" data-aos-duration="600">From first call to full launch in days, not months.</p>
+            </div>
+            <div class="timeline-enterprise" data-aos="fade-up" data-aos-duration="700">
+               <div class="timeline-step">
+                  <div class="step-number">1</div>
+                  <div class="step-content">
+                     <h4>Discovery Call</h4>
+                     <p>We learn about your program's size, needs, and goals. 15 minutes.</p>
+                  </div>
+               </div>
+               <div class="timeline-step">
+                  <div class="step-number">2</div>
+                  <div class="step-content">
+                     <h4>Setup &amp; Onboarding</h4>
+                     <p>We configure your program account, import rosters, and train your instructors.</p>
+                  </div>
+               </div>
+               <div class="timeline-step">
+                  <div class="step-number">3</div>
+                  <div class="step-content">
+                     <h4>Launch</h4>
+                     <p>Students get access. You get your analytics dashboard. Support continues.</p>
+                  </div>
+               </div>
+               <div class="timeline-step">
+                  <div class="step-number">4</div>
+                  <div class="step-content">
+                     <h4>Ongoing Partnership</h4>
+                     <p>Regular check-ins, feature requests, and dedicated support. We grow with you.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- =============================================
+           DATA & COMPLIANCE
+           ============================================= -->
+      <section class="section-enterprise">
+         <div class="container">
+            <div class="row align-items-center">
+               <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-duration="500">
+                  <h2 class="section-heading">Your Data, Protected</h2>
+                  <p class="section-subheading">We take student data privacy seriously. MedEdPrep is committed to responsible data handling practices appropriate for educational institutions.</p>
+                  <ul class="compliance-list">
+                     <li>
+                        <span class="shield-icon">
+                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </span>
+                        Student performance data is accessible only to authorized program administrators
+                     </li>
+                     <li>
+                        <span class="shield-icon">
+                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </span>
+                        We do not sell or share student data with third parties
+                     </li>
+                     <li>
+                        <span class="shield-icon">
+                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </span>
+                        Data retention and deletion policies available on request
+                     </li>
+                     <li>
+                        <span class="shield-icon">
+                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </span>
+                        Contact us for details about FERPA compliance
+                     </li>
+                  </ul>
+                  <a href="../contact/index.html" class="btn-enterprise btn-enterprise-outline">Request Our Data Practices Document</a>
+               </div>
+               <div class="col-12 col-lg-5 offset-lg-1 mt-4 mt-lg-0" data-aos="fade-up" data-aos-duration="600">
+                  <div class="stat-callout-row" style="flex-direction: column;">
+                     <div class="stat-callout">
+                        <div class="stat-number">200+</div>
+                        <p class="stat-label">Data Points Tracked Per Student</p>
+                     </div>
+                     <div class="stat-callout">
+                        <div class="stat-number">0</div>
+                        <p class="stat-label">Third Parties With Access to Your Data</p>
+                     </div>
+                     <div class="stat-callout">
+                        <div class="stat-number">100%</div>
+                        <p class="stat-label">Program-Controlled Access</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- =============================================
+           PRICING PREVIEW
+           ============================================= -->
+      <section class="section-enterprise bg-light-gray">
+         <div class="container">
+            <div class="text-center">
+               <h2 class="section-heading" data-aos="fade-up" data-aos-duration="500">Transparent Pricing, No Surprises</h2>
+               <p class="section-subheading centered" data-aos="fade-up" data-aos-duration="600">Simple per-student pricing. No hidden fees. No contracts required.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+               <div class="col-12 col-md-5" data-aos="fade-up" data-aos-duration="500">
+                  <div class="pricing-card-enterprise">
+                     <div class="pricing-label">Institutional Access</div>
+                     <div class="pricing-amount">$80</div>
+                     <div class="pricing-period">/student/year</div>
+                     <p class="pricing-desc">Full platform access for every student. Free administrative account. Program-level analytics and reporting.</p>
+                     <a href="../contact/index.html" class="btn-enterprise btn-enterprise-primary" style="width: 100%;">Schedule a Demo</a>
+                  </div>
+               </div>
+               <div class="col-12 col-md-5" data-aos="fade-up" data-aos-duration="600">
+                  <div class="pricing-card-enterprise featured">
+                     <div class="pricing-label">High School Programs</div>
+                     <div class="pricing-amount">FREE</div>
+                     <div class="pricing-period">for the entire class</div>
+                     <p class="pricing-desc">Full platform for the entire class. One full calendar year. EMT and AEMT classes eligible. Any high school program in the nation.</p>
+                     <a href="../contact/index.html" class="btn-enterprise btn-enterprise-primary" style="width: 100%;">Enroll Your School — It's Free</a>
+                  </div>
+               </div>
+            </div>
+            <div class="text-center mt-4" data-aos="fade-up" data-aos-duration="700">
+               <p style="font-size: 15px; color: var(--text-muted);">Not ready to commit? Students can subscribe individually — your program still gets the analytics dashboard free.</p>
+               <a href="../price/index.html" style="color: var(--teal); font-weight: 600; text-decoration: none;">See all pricing options &rarr;</a>
+            </div>
+         </div>
+      </section>
+
+      <!-- =============================================
+           CASE STUDY PLACEHOLDER
+           ============================================= -->
+      <section class="section-enterprise">
+         <div class="container">
+            <div class="text-center">
+               <h2 class="section-heading" data-aos="fade-up" data-aos-duration="500">Results That Speak for Themselves</h2>
+            </div>
+            <div class="row justify-content-center">
+               <div class="col-12 col-lg-8" data-aos="fade-up" data-aos-duration="600">
+                  <div class="case-study-placeholder">
+                     <h4>[Case Study Coming Soon]</h4>
+                     <p>We're documenting the outcomes of our program partnerships. Check back for detailed before-and-after data from real EMS programs.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="stat-callout-row justify-content-center mt-5" data-aos="fade-up" data-aos-duration="700">
+               <div class="stat-callout">
+                  <div class="stat-number">20%</div>
+                  <p class="stat-label">Increase in NREMT Pass Rates</p>
+               </div>
+               <div class="stat-callout">
+                  <div class="stat-number">1,000+</div>
+                  <p class="stat-label">Students Evaluated Annually for GA Trauma Commission</p>
+               </div>
+               <div class="stat-callout">
+                  <div class="stat-number">100+</div>
+                  <p class="stat-label">Programs Served Nationwide</p>
+               </div>
+            </div>
+            <p class="text-center mt-4" style="font-size: 15px; color: var(--text-muted); max-width: 700px; margin-left: auto; margin-right: auto;">Programs using MedEdPrep have documented a 20% increase in NREMT pass rates. The Georgia Trauma Commission contracted us to provide competency evaluations for over 1,000 students annually.</p>
+         </div>
+      </section>
+
+      <!-- =============================================
+           DOWNLOADABLE ONE-PAGER PLACEHOLDER
+           ============================================= -->
+      <section class="section-enterprise bg-light-gray" style="padding: 48px 0;">
+         <div class="container">
+            <div class="one-pager-callout" data-aos="fade-up" data-aos-duration="500">
+               <div class="callout-text">
+                  <h4>Need something to share with your administration?</h4>
+                  <p>Download our Program Overview (PDF) — <em>(Coming soon)</em></p>
+               </div>
+               <a href="#" class="btn-enterprise btn-enterprise-primary" onclick="return false;" style="opacity: 0.6; cursor: default;">Download PDF</a>
+            </div>
+         </div>
+      </section>
+
+      <!-- =============================================
+           FINAL CTA
+           ============================================= -->
+      <section class="cta-enterprise">
+         <div class="container">
+            <h2 data-aos="fade-up" data-aos-duration="500">Ready to See What MedEdPrep Can Do for Your Program?</h2>
+            <p data-aos="fade-up" data-aos-duration="600">Schedule a 15-minute call. We'll show you the platform, answer your questions, and build a plan for your program.</p>
+            <div class="btn-group-cta" data-aos="fade-up" data-aos-duration="700">
+               <a href="../contact/index.html" class="btn-enterprise btn-enterprise-primary">Schedule a Demo</a>
+               <a href="mailto:info@mededprep.com" class="btn-enterprise btn-enterprise-secondary">Email Us Directly</a>
+            </div>
+         </div>
+      </section>
+
+
+	<footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-bottom-img"><img src="../../wp-content/themes/theme-mededprep/assets/images/footer.png" alt="Footer background"></div>
+            <div class="container">
+               <div class="row align-items-center">
+                  <div class="col-12 col-lg-4 order-lg-1">
+                     <div class="list-link-box">
+                        <ul id="" class="list-link">
+                           <li class="menu-item"><a href="../features/index.html">Features</a></li>
+                           <li class="menu-item"><a href="../price/index.html">Pricing</a></li>
+                           <li class="menu-item"><a href="../about/index.html">About</a></li>
+                           <li class="menu-item current-menu-item"><a href="index.html" aria-current="page">Programs</a></li>
+                           <li class="menu-item"><a href="../../resources/index.html">Resources</a></li>
+                           <li class="menu-item"><a href="../contact/index.html">Contact</a></li>
+                           <li class="menu-item"><a href="../../privacy-policy/index.html">Privacy Policy</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-12 col-lg-4 order-lg-3">
+                     <div class="list-link-box d-flex justify-content-center justify-content-lg-end">
+                        <ul class="social-link">
+                           <li>
+                              <a href="https://www.youtube.com/channel/UCUr6GzZnK3ixCYgvCOo6wcw" target="_blank">
+                                 <img
+                                    src="../../wp-content/uploads/2022/06/youtube.svg"
+                                    alt="YouTube"
+                                    width="24"
+                                    height="24"
+                                 >
+                              </a>
+                           </li>
+                           <li>
+                              <a href="https://facebook.com/625961557271915" target="_blank">
+                                 <img
+                                    src="../../wp-content/uploads/2022/06/facebook.svg"
+                                    alt="Facebook"
+                                    width="24"
+                                    height="24"
+                                 >
+                              </a>
+                           </li>
+                           <li>
+                              <a href="https://linkedin.com/in/jeramey-ricks-94b6a6258" target="_blank">
+                                 <img
+                                    src="../../wp-content/uploads/2022/06/linkedin.svg"
+                                    alt="LinkedIn"
+                                    width="24"
+                                    height="24"
+                                 >
+                              </a>
+                           </li>
+                           <li>
+                              <a href="https://www.instagram.com/mededprep" target="_blank">
+                                 <img
+                                    src="../../wp-content/uploads/2022/06/Instagram.svg"
+                                    alt="Instagram"
+                                    width="24"
+                                    height="24"
+                                 >
+                              </a>
+                           </li>
+                           <li>
+                              <a href="https://twitter.com/MedEdPrep" target="_blank">
+                                 <img
+                                    src="../../wp-content/uploads/2022/06/twitter.svg"
+                                    alt="Twitter"
+                                    width="24"
+                                    height="24"
+                                 >
+                              </a>
+                           </li>
+                           <li>
+                              <a href="https://discord.gg/8bgh9d4x3Y" target="_blank">
+                                 <img
+                                    src="../../wp-content/uploads/2025/12/Discord-Symbol-White.svg"
+                                    alt="Discord"
+                                    width="24"
+                                    height="24"
+                                 >
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="footer-newsletter d-flex justify-content-center justify-content-lg-end mt-3">
+                        <div>
+                           <p>Get EMS study tips and platform updates — no spam, we're too busy building features.</p>
+                           <form onsubmit="return false;">
+                              <input type="email" placeholder="Your email address" aria-label="Email address for newsletter">
+                              <button type="submit">Subscribe</button>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-12 col-lg-4 order-lg-2">
+                     <div class="text-center">
+                        <a class="navbar-brand" href="../../index.html">
+                           <img
+                              src="../../wp-content/uploads/2022/06/logo-2.svg"
+                              alt="MedEdPrep Logo"
+                              width="170"
+                              height="41"
+                        >
+                        </a>
+                        <p class="copy-right mb-0">&copy; 2026 MedEdPrep. Questions? <a href="mailto:info@mededprep.com">info@mededprep.com</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+
+      <div class="loader-wrap d-none">
+         <div class="loader-div">
+            <div class="intro-block">
+               <div class="monitor">
+                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                           viewBox="0 0 500 200" style="enable-background:new 0 0 500 200;" xml:space="preserve">
+                     <g>
+                        <polyline class="ekg" points="486.6,113.8 328.2,113.8 310.3,132.3 296,70.7 246.8,127.4 241.6,120.2 233.9,166.4 227,27.6
+                           213.2,118.3 211.8,112.3 205.1,126.1 198.2,108.5 194.1,124.4 184.5,92.9 174.1,113 4.3,113 	"/>
+                     </g>
+                  </svg>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+   <!-- close main-website -->
+
+   <!-- MAIN JS -->
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/bootstrap.bundle.min.js" id="bootstrap-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/swiper.min.js" id="swiper-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/aos.js" id="aos-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/jquery.counterup.min.js" id="counterup-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/waypoints.min.js" id="waypoints-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/mainframe.js" id="mainframe-js"></script>
+
+</body>
+
+</html>

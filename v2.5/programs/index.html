@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- COMMON META TAG -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#53B6CD">
+
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+	<link rel="canonical" href="https://www.mededprep.com/v2.5/programs/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Programs — MedEdPrep Institutional Access for EMS Education" />
+	<meta property="og:description" content="Institutional EMS education platform with analytics, clinical tracking, exam tools, and state designation support. Trusted by the Georgia Trauma Commission." />
+	<meta property="og:url" content="https://www.mededprep.com/v2.5/programs/" />
+	<meta property="og:site_name" content="MedEdPrep" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Programs — MedEdPrep Institutional Access for EMS Education" />
+	<meta name="twitter:description" content="Institutional EMS education platform with analytics, clinical tracking, exam tools, and state designation support. Trusted by the Georgia Trauma Commission." />
+
+	<link rel='stylesheet' id='bootstrap-css' href='../../wp-content/themes/theme-mededprep/assets/css/bootstrap.min.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='swiper-css' href='../../wp-content/themes/theme-mededprep/assets/css/swiper.min.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='aos-css' href='../../wp-content/themes/theme-mededprep/assets/css/aos.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='line-awesome-css' href='../../wp-content/themes/theme-mededprep/assets/css/line-awesome.min.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='style-css' href='../../wp-content/themes/theme-mededprep/assets/css/style.css' type='text/css' media='all' />
+	<script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/jquery-1.12.4.min.js" id="jquery-js"></script>
+
+	<link rel="icon" href="../../wp-content/uploads/2022/06/favicon.ico" sizes="32x32" />
+	<link rel="icon" href="../../wp-content/uploads/2022/06/favicon.ico" sizes="192x192" />
+	<link rel="apple-touch-icon" href="../../wp-content/uploads/2022/06/favicon.ico" />
+
+	<title>Programs — MedEdPrep Institutional Access for EMS Education</title>
+
+	<style>
+		/* Programs page custom styles — matches site design language */
+		.programs-card {
+			background: rgba(255,255,255,0.05);
+			border: 1px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			padding: 30px 25px;
+			height: 100%;
+			transition: transform 0.3s ease, border-color 0.3s ease;
+		}
+		.programs-card:hover {
+			transform: translateY(-5px);
+			border-color: #53B6CD;
+		}
+		.programs-card .card-icon {
+			width: 56px;
+			height: 56px;
+			border-radius: 12px;
+			background: rgba(83,182,205,0.15);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 20px;
+			font-size: 24px;
+			color: #53B6CD;
+		}
+		.programs-card h4 {
+			font-size: 20px;
+			font-weight: 700;
+			margin-bottom: 12px;
+		}
+		.programs-card p {
+			font-size: 15px;
+			opacity: 0.85;
+			margin-bottom: 0;
+		}
+		.step-number {
+			width: 48px;
+			height: 48px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #53B6CD, #3a8fa3);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 20px;
+			font-weight: 700;
+			color: #fff;
+			margin: 0 auto 16px;
+			flex-shrink: 0;
+		}
+		.step-connector {
+			position: relative;
+		}
+		.pricing-preview-card {
+			background: rgba(255,255,255,0.05);
+			border: 1px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			padding: 35px 30px;
+			text-align: center;
+			height: 100%;
+			transition: transform 0.3s ease, border-color 0.3s ease;
+		}
+		.pricing-preview-card:hover {
+			transform: translateY(-5px);
+			border-color: #53B6CD;
+		}
+		.pricing-preview-card.featured {
+			border-color: #53B6CD;
+			background: rgba(83,182,205,0.08);
+		}
+		.pricing-preview-card .price-amount {
+			font-size: 36px;
+			font-weight: 700;
+			color: #53B6CD;
+		}
+		.pricing-preview-card .price-unit {
+			font-size: 16px;
+			opacity: 0.7;
+			font-weight: 400;
+		}
+		.feature-include-card {
+			background: rgba(255,255,255,0.04);
+			border: 1px solid rgba(255,255,255,0.08);
+			border-radius: 10px;
+			padding: 24px 20px;
+			height: 100%;
+			transition: border-color 0.3s ease;
+		}
+		.feature-include-card:hover {
+			border-color: rgba(83,182,205,0.4);
+		}
+		.feature-include-card h5 {
+			font-size: 17px;
+			font-weight: 700;
+			margin-bottom: 8px;
+			color: #53B6CD;
+		}
+		.feature-include-card p {
+			font-size: 14px;
+			opacity: 0.8;
+			margin-bottom: 0;
+		}
+		.data-list li {
+			position: relative;
+			padding-left: 28px;
+			margin-bottom: 14px;
+			font-size: 15px;
+			opacity: 0.9;
+		}
+		.data-list li::before {
+			content: "\f058";
+			font-family: "Line Awesome Free";
+			font-weight: 900;
+			position: absolute;
+			left: 0;
+			color: #53B6CD;
+			font-size: 18px;
+		}
+		.case-study-placeholder {
+			background: rgba(83,182,205,0.06);
+			border: 1px dashed rgba(83,182,205,0.3);
+			border-radius: 12px;
+			padding: 40px 30px;
+			text-align: center;
+		}
+		.newsletter-input-group {
+			max-width: 420px;
+			margin: 0 auto;
+		}
+		.newsletter-input-group input {
+			background: rgba(255,255,255,0.1);
+			border: 1px solid rgba(255,255,255,0.2);
+			color: #fff;
+			border-radius: 6px 0 0 6px;
+			padding: 10px 16px;
+			font-size: 14px;
+		}
+		.newsletter-input-group input::placeholder {
+			color: rgba(255,255,255,0.5);
+		}
+		.newsletter-input-group .btn {
+			border-radius: 0 6px 6px 0;
+		}
+	</style>
+</head>
+
+<body>
+   <!-- overlay -->
+   <div class="overlay"></div>
+   <!-- overlay -->
+   <div class="main-website">
+      <div class="gradient-effect-top-bg">
+         <!-- wraper-header -->
+         <header class="wraper-header">
+            <div class="container-fluid">
+               <nav class="navbar navbar-expand-lg ">
+                  <a class="navbar-brand" href="../../index.html">
+                        <img
+                           src="../../wp-content/uploads/2022/06/logo-2.svg"
+                           alt="MedEdPrep"
+                           width="0"
+                           height="0"
+                        >
+                  </a>
+                  <div class="mx-auto main-nav" id="sidebar">
+                     <ul id="navbar-nav mx-auto menu" class="">
+                        <li class="menu-item"><a href="../../features/index.html">Features</a></li>
+                        <li class="menu-item"><a href="../../price/index.html">Pricing</a></li>
+                        <li class="menu-item"><a href="../../about/index.html">About</a></li>
+                        <li class="menu-item"><a href="../../resources/index.html">Resources</a></li>
+                        <li class="menu-item current-menu-item"><a href="index.html" aria-current="page">Programs</a></li>
+                        <li class="menu-item"><a href="../../contact/index.html">Contact</a></li>
+                     </ul>
+                  </div>
+                  <div class="d-flex">
+                     <div class=" d-none d-lg-flex align-items-center">
+                        <p class="welcome-text">
+                           <div class=" d-none d-lg-flex">
+                              <a class="nav-link btn btn-bordered-yellow me-2" href="https://student.mededprep.com/" target="">Sign In</a>
+                              <a class="nav-link btn btn-bg-yellow" href="https://student.mededprep.com/signup" target="">Sign Up</a>
+                           </div>
+                        </p>
+                     </div>
+                     <div class="hamburger-lang-holder d-lg-none">
+                        <button onclick="mMenuToggle()" class="d-inline-md-block d-lg-none btn py-0" id="sidebarCollapse"
+                           type="button">
+                           <img src="../../wp-content/themes/theme-mededprep/assets/images/icon/hamburger-menu.svg">
+                        </button>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+         </header>
+
+         <!-- wraper-mobile-header -->
+         <div class="wraper-mobile-header">
+            <div class="mobile-header d-flex flex-column">
+               <div class="mobile-header-top w-100 mb-5">
+                  <div class=" mb-5">
+                     <div class="d-flex justify-content-between align-items-center">
+                        <div class="brand-logo d-inline-block">
+                           <a href="../../index.html">
+                              <img
+                                 src="../../wp-content/uploads/2022/06/logo-2.svg"
+                                 alt="MedEdPrep"
+                                 width="0"
+                                 height="0"
+                              >
+                           </a>
+                        </div>
+                        <button type="button" class="mobile-menu-close mobileMenuClose d-inline-block p-0"
+                           onclick="mMenuToggle()">
+                           <img src="../../wp-content/themes/theme-mededprep/assets/images/icon/close.svg" alt="close" class="menu-close">
+                        </button>
+                     </div>
+                  </div>
+                  <div class="mobile-header-menu">
+                     <ul id="menu-header-menu-1" class="menu">
+                        <li class="menu-item"><a href="../../features/index.html">Features</a></li>
+                        <li class="menu-item"><a href="../../price/index.html">Pricing</a></li>
+                        <li class="menu-item"><a href="../../about/index.html">About</a></li>
+                        <li class="menu-item"><a href="../../resources/index.html">Resources</a></li>
+                        <li class="menu-item current-menu-item"><a href="index.html" aria-current="page">Programs</a></li>
+                        <li class="menu-item"><a href="../../contact/index.html">Contact</a></li>
+                     </ul>
+                     <div class="mt-4 d-flex flex-wrap">
+                        <p class="welcome-text w-100">
+                           <div class=" d-flex">
+                              <a class="nav-link btn btn-bordered-yellow me-2" href="https://student.mededprep.com/" target="">Sign In</a>
+                              <a class="nav-link btn btn-bg-yellow" href="https://student.mededprep.com/signup" target="">Sign Up</a>
+                           </div>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- wraper-mobile-header -->
+         <div class="header-gap-wraper"></div>
+
+         <!-- ============================== -->
+         <!-- HERO BANNER -->
+         <!-- ============================== -->
+         <section class="section_banner inner-page-banner">
+            <div class="container">
+               <div class="row align-items-center">
+                  <div class="col-12 col-lg-6">
+                     <div class="about-banner-wraper">
+                        <div class="head-title-holder" data-aos='fade-up' data-aos-duration="500">
+                           <h2 class="head3-title">Your Pass Rates Are Your Reputation. We Help You Prove It.</h2>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                     <div class="head-title-holder mb-0">
+                        <p class="head-sub-title" style="font-size:1.15rem;">MedEdPrep gives EMS programs the analytics, clinical tracking, and exam tools they need &mdash; plus designation support from people who used to run the process.</p>
+                        <div class="d-flex flex-wrap" style="gap: 12px; margin-top: 25px;">
+                           <a class="btn btn-bg btn-50" href="../../contact/index.html">Schedule a Demo</a>
+                           <a class="btn btn-bordered btn-50" href="../../price/index.html">See Pricing</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <!-- HERO BANNER END -->
+
+         <!-- ============================== -->
+         <!-- CREDENTIAL BAR -->
+         <!-- ============================== -->
+         <div class="container-fluid" style="background: rgba(0,0,0,0.3); padding: 20px 0;">
+            <div class="container">
+               <div class="row text-center align-items-center">
+                  <div class="col-6 col-md-3 mb-2 mb-md-0">
+                     <p class="mb-0" style="font-size:16px;"><strong>GA Trauma Commission</strong></p>
+                     <p class="mb-0" style="font-size:13px; opacity:0.8;">Contracted for statewide competency evaluations</p>
+                  </div>
+                  <div class="col-6 col-md-3 mb-2 mb-md-0">
+                     <p class="mb-0" style="font-size:16px;"><strong>GA Board of Education</strong></p>
+                     <p class="mb-0" style="font-size:13px; opacity:0.8;">Approved high school EMS exam</p>
+                  </div>
+                  <div class="col-6 col-md-3">
+                     <p class="mb-0" style="font-size:16px;"><strong>CAPCE Accredited</strong></p>
+                     <p class="mb-0" style="font-size:13px; opacity:0.8;">Continuing education provider</p>
+                  </div>
+                  <div class="col-6 col-md-3">
+                     <p class="mb-0" style="font-size:16px;"><strong>100+ Programs Served</strong></p>
+                     <p class="mb-0" style="font-size:13px; opacity:0.8;">Nationwide EMS education partners</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- CREDENTIAL BAR END -->
+
+      </div>
+      <!-- gradient-effect-top-bg end -->
+
+      <!-- ============================== -->
+      <!-- WHY PROGRAMS CHOOSE MEDEDPREP -->
+      <!-- ============================== -->
+      <section class="section section-achievements">
+         <div class="container">
+            <div class="row">
+               <div class="col-12 col-md-10 col-lg-8 mx-auto text-center mb-5">
+                  <div class="head-title-holder">
+                     <h2 class="head-title" data-aos='fade-up' data-aos-duration="500">
+                        Why Programs Choose MedEdPrep
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-12 col-md-4 mb-4" data-aos="fade-up" data-aos-duration="500">
+                  <div class="programs-card">
+                     <div class="card-icon">
+                        <i class="las la-chart-bar"></i>
+                     </div>
+                     <h4>See Everything</h4>
+                     <p>200+ data points per student. Track performance across every category, cohort, and semester.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-md-4 mb-4" data-aos="fade-up" data-aos-duration="700">
+                  <div class="programs-card">
+                     <div class="card-icon">
+                        <i class="las la-file-alt"></i>
+                     </div>
+                     <h4>Prove Everything</h4>
+                     <p>Generate the reports your state agency and accreditor need, in the format they expect.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-md-4 mb-4" data-aos="fade-up" data-aos-duration="900">
+                  <div class="programs-card">
+                     <div class="card-icon">
+                        <i class="las la-tools"></i>
+                     </div>
+                     <h4>Fix Everything</h4>
+                     <p>Identify at-risk students early. Targeted remediation based on actual data. Programs see 20% higher NREMT pass rates.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- WHY PROGRAMS END -->
+
+      <!-- ============================== -->
+      <!-- WHAT'S INCLUDED -->
+      <!-- ============================== -->
+      <section class="section" style="padding-top: 20px; padding-bottom: 60px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-12 col-md-10 col-lg-8 mx-auto text-center mb-5">
+                  <div class="head-title-holder">
+                     <h2 class="head-title" data-aos="fade-up" data-aos-duration="500">
+                        What's Included
+                     </h2>
+                     <p class="head-sub-title">Everything your program needs to prepare students, track outcomes, and satisfy your accreditor.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-12 col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="400">
+                  <div class="feature-include-card">
+                     <h5><i class="las la-book-open" style="margin-right:6px;"></i> Student Test Prep</h5>
+                     <p>Adaptive question bank with NREMT-style simulations, plain-language explanations, and performance analytics for every student.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="500">
+                  <div class="feature-include-card">
+                     <h5><i class="las la-edit" style="margin-right:6px;"></i> Instructor Exam Tools</h5>
+                     <p>Build custom exams from our question bank or your own. Assign, grade, and review with full analytics on every attempt.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="600">
+                  <div class="feature-include-card">
+                     <h5><i class="las la-heartbeat" style="margin-right:6px;"></i> Clinical Tracking</h5>
+                     <p>Log patient contacts, track skill completions, and generate clinical reports for accreditation and state requirements.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="700">
+                  <div class="feature-include-card">
+                     <h5><i class="las la-clipboard-check" style="margin-right:6px;"></i> Lab Competency Tracking</h5>
+                     <p>Digital competency sign-offs for psychomotor skills. Eliminate paper records and stay audit-ready.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="800">
+                  <div class="feature-include-card">
+                     <h5><i class="las la-graduation-cap" style="margin-right:6px;"></i> Gradebook</h5>
+                     <p>Centralized grades across exams, clinicals, and competencies. One place to see the full picture for every student.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-sm-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-duration="900">
+                  <div class="feature-include-card">
+                     <h5><i class="las la-handshake" style="margin-right:6px;"></i> CoAssist</h5>
+                     <p>State designation support from people who used to run the process. We help you prepare for site visits and maintain compliance.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- WHAT'S INCLUDED END -->
+
+      <!-- ============================== -->
+      <!-- GETTING STARTED -->
+      <!-- ============================== -->
+      <section class="section section-achievements" style="padding-top: 40px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-12 col-md-10 col-lg-8 mx-auto text-center mb-5">
+                  <div class="head-title-holder">
+                     <h2 class="head-title" data-aos="fade-up" data-aos-duration="500">
+                        Getting Started Is Simple
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row justify-content-center">
+               <div class="col-6 col-lg-3 mb-4 text-center" data-aos="fade-up" data-aos-duration="400">
+                  <div class="programs-card" style="text-align:center;">
+                     <div class="step-number">1</div>
+                     <h4 style="font-size:18px;">Discovery Call</h4>
+                     <p>15 minutes. We learn your needs.</p>
+                  </div>
+               </div>
+               <div class="col-6 col-lg-3 mb-4 text-center" data-aos="fade-up" data-aos-duration="600">
+                  <div class="programs-card" style="text-align:center;">
+                     <div class="step-number">2</div>
+                     <h4 style="font-size:18px;">Setup &amp; Onboarding</h4>
+                     <p>We configure your account and train instructors.</p>
+                  </div>
+               </div>
+               <div class="col-6 col-lg-3 mb-4 text-center" data-aos="fade-up" data-aos-duration="800">
+                  <div class="programs-card" style="text-align:center;">
+                     <div class="step-number">3</div>
+                     <h4 style="font-size:18px;">Launch</h4>
+                     <p>Students get access. You get analytics.</p>
+                  </div>
+               </div>
+               <div class="col-6 col-lg-3 mb-4 text-center" data-aos="fade-up" data-aos-duration="1000">
+                  <div class="programs-card" style="text-align:center;">
+                     <div class="step-number">4</div>
+                     <h4 style="font-size:18px;">Ongoing Partnership</h4>
+                     <p>Regular check-ins, feature requests, dedicated support.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- GETTING STARTED END -->
+
+      <!-- ============================== -->
+      <!-- YOUR DATA, PROTECTED -->
+      <!-- ============================== -->
+      <section class="section" style="padding-top: 20px; padding-bottom: 60px;">
+         <div class="container">
+            <div class="row align-items-center">
+               <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                  <div class="head-title-holder" data-aos="fade-up" data-aos-duration="500">
+                     <h2 class="head-title mb-3">Your Data, Protected</h2>
+                     <p class="head-sub-title">We take student data seriously. Your program's data belongs to your program.</p>
+                  </div>
+               </div>
+               <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-duration="700">
+                  <ul class="data-list" style="list-style:none; padding-left:0;">
+                     <li>Student data accessible only to authorized administrators</li>
+                     <li>We do not sell or share student data</li>
+                     <li>Data retention and deletion policies available on request</li>
+                     <li>Contact us for FERPA compliance details</li>
+                  </ul>
+                  <a class="btn btn-bordered btn-50" href="../../contact/index.html" style="margin-top:10px;">Request Our Data Practices Document</a>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- YOUR DATA END -->
+
+      <!-- ============================== -->
+      <!-- PRICING PREVIEW -->
+      <!-- ============================== -->
+      <section class="section section-achievements" style="padding-top: 40px; padding-bottom: 40px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-12 col-md-10 col-lg-8 mx-auto text-center mb-5">
+                  <div class="head-title-holder">
+                     <h2 class="head-title" data-aos="fade-up" data-aos-duration="500">
+                        Pricing That Works for Your Program
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row justify-content-center">
+               <div class="col-12 col-md-5 mb-4" data-aos="fade-up" data-aos-duration="500">
+                  <div class="pricing-preview-card featured">
+                     <h4 style="font-size:22px; font-weight:700; margin-bottom:4px;">Institutional</h4>
+                     <div class="price-amount">$80<span class="price-unit">/student/year</span></div>
+                     <hr style="border-color: rgba(255,255,255,0.15); margin: 20px 0;">
+                     <ul style="list-style:none; padding:0; text-align:left; font-size:15px; opacity:0.9;">
+                        <li style="margin-bottom:10px;"><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>Full platform access for all students</li>
+                        <li style="margin-bottom:10px;"><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>Free admin &amp; instructor accounts</li>
+                        <li style="margin-bottom:10px;"><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>200+ analytics per student</li>
+                        <li style="margin-bottom:10px;"><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>Clinical tracking &amp; gradebook</li>
+                        <li><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>CoAssist designation support</li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="col-12 col-md-5 mb-4" data-aos="fade-up" data-aos-duration="700">
+                  <div class="pricing-preview-card">
+                     <h4 style="font-size:22px; font-weight:700; margin-bottom:4px;">High School</h4>
+                     <div class="price-amount">FREE</div>
+                     <hr style="border-color: rgba(255,255,255,0.15); margin: 20px 0;">
+                     <ul style="list-style:none; padding:0; text-align:left; font-size:15px; opacity:0.9;">
+                        <li style="margin-bottom:10px;"><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>Full platform access</li>
+                        <li style="margin-bottom:10px;"><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>One full year, no strings</li>
+                        <li style="margin-bottom:10px;"><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>Any high school in America</li>
+                        <li><i class="las la-check" style="color:#53B6CD; margin-right:8px;"></i>All exam &amp; study tools included</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-12 text-center" data-aos="fade-up" data-aos-duration="500">
+                  <p class="head-sub-title" style="font-size:15px; margin-bottom:20px;">Students can subscribe individually &mdash; your program still gets analytics free.</p>
+                  <a href="../../price/index.html" class="btn btn-bordered btn-50">See all pricing &rarr;</a>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- PRICING PREVIEW END -->
+
+      <!-- ============================== -->
+      <!-- CASE STUDY PLACEHOLDER -->
+      <!-- ============================== -->
+      <section class="section" style="padding-top: 20px; padding-bottom: 40px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-12 col-lg-8 mx-auto" data-aos="fade-up" data-aos-duration="500">
+                  <div class="case-study-placeholder">
+                     <h2 class="head-title mb-3" style="font-size:28px;">Results That Speak for Themselves</h2>
+                     <p class="head-sub-title" style="opacity:0.7; font-size:15px; margin-bottom:8px;">[Case Study Coming Soon] &mdash; We're documenting outcomes from our program partnerships.</p>
+                     <p class="head-sub-title" style="font-size:16px; font-weight:600;">Programs using MedEdPrep have documented a 20% increase in NREMT pass rates.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- CASE STUDY END -->
+
+      <!-- ============================== -->
+      <!-- ONE-PAGER PLACEHOLDER -->
+      <!-- ============================== -->
+      <section class="section" style="padding-top: 0; padding-bottom: 40px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-12 col-lg-8 mx-auto text-center" data-aos="fade-up" data-aos-duration="500">
+                  <div class="programs-card" style="text-align:center; padding:30px;">
+                     <i class="las la-file-pdf" style="font-size:40px; color:#53B6CD; margin-bottom:10px;"></i>
+                     <p class="head-sub-title" style="margin-bottom:0;">Need something for your administration? <strong>Download our Program Overview (PDF)</strong> &mdash; Coming soon</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- ONE-PAGER END -->
+
+      <!-- ============================== -->
+      <!-- FINAL CTA -->
+      <!-- ============================== -->
+      <section class="section" style="padding-top: 20px; padding-bottom: 80px;">
+         <div class="container">
+            <div class="row">
+               <div class="col-12 col-lg-8 mx-auto text-center">
+                  <h2 class="head-title mb-3" data-aos="fade-up" data-aos-duration="500">Ready to See What MedEdPrep Can Do for Your Program?</h2>
+                  <p class="head-sub-title mb-4" data-aos="fade-up" data-aos-duration="700">Schedule a 15-minute call. We'll show you the platform and answer every question.</p>
+                  <div class="d-flex justify-content-center flex-wrap" style="gap: 15px;" data-aos="fade-up" data-aos-duration="900">
+                     <a class="btn btn-bg btn-50" href="../../contact/index.html">Schedule a Demo</a>
+                     <a class="btn btn-bordered btn-50" href="mailto:info@mededprep.com">Email Us</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- FINAL CTA END -->
+
+   </div>
+   <!-- main-website end -->
+
+   <!-- ============================== -->
+   <!-- FOOTER -->
+   <!-- ============================== -->
+   <footer class="footer">
+      <div class="footer-bottom">
+         <div class="footer-bottom-img"><img src="../../wp-content/themes/theme-mededprep/assets/images/footer.png" alt=""></div>
+         <div class="container">
+            <div class="row align-items-center">
+               <div class="col-12 col-lg-4 order-lg-1">
+                  <div class="list-link-box">
+                     <ul class="list-link">
+                        <li class="menu-item"><a href="../../about/index.html">About</a></li>
+                        <li class="menu-item"><a href="../../price/index.html">Pricing</a></li>
+                        <li class="menu-item"><a href="../../features/index.html">Features</a></li>
+                        <li class="menu-item"><a href="../../resources/index.html">Resources</a></li>
+                        <li class="menu-item"><a href="index.html">Programs</a></li>
+                        <li class="menu-item"><a href="../../contact/index.html">Contact</a></li>
+                        <li class="menu-item"><a href="../../privacy-policy/index.html">Privacy Policy</a></li>
+                     </ul>
+                  </div>
+                  <!-- Newsletter signup -->
+                  <div class="mt-3 mb-3">
+                     <p style="font-size:13px; opacity:0.7; margin-bottom:8px;">Stay updated with MedEdPrep news:</p>
+                     <div class="newsletter-input-group d-flex" style="max-width:320px;">
+                        <input type="email" class="form-control" placeholder="Your email address" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:6px 0 0 6px; padding:8px 12px; font-size:13px;">
+                        <a class="btn btn-bg-yellow" style="border-radius:0 6px 6px 0; padding:8px 16px; font-size:13px;">Subscribe</a>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-lg-4 order-lg-3">
+                  <div class="list-link-box d-flex justify-content-center justify-content-lg-end">
+                     <ul class="social-link">
+                        <li>
+                           <a href="https://www.youtube.com/channel/UCUr6GzZnK3ixCYgvCOo6wcw" target="_blank">
+                              <img
+                                 src="../../wp-content/uploads/2022/06/youtube.svg"
+                                 alt="YouTube"
+                                 width="0"
+                                 height="0"
+                              >
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://facebook.com/625961557271915" target="_blank">
+                              <img
+                                 src="../../wp-content/uploads/2022/06/facebook.svg"
+                                 alt="Facebook"
+                                 width="0"
+                                 height="0"
+                              >
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://linkedin.com/in/jeramey-ricks-94b6a6258" target="_blank">
+                              <img
+                                 src="../../wp-content/uploads/2022/06/linkedin.svg"
+                                 alt="LinkedIn"
+                                 width="0"
+                                 height="0"
+                              >
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://www.instagram.com/mededprep" target="_blank">
+                              <img
+                                 src="../../wp-content/uploads/2022/06/Instagram.svg"
+                                 alt="Instagram"
+                                 width="0"
+                                 height="0"
+                              >
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://twitter.com/MedEdPrep" target="_blank">
+                              <img
+                                 src="../../wp-content/uploads/2022/06/twitter.svg"
+                                 alt="Twitter"
+                                 width="0"
+                                 height="0"
+                              >
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://discord.gg/8bgh9d4x3Y" target="_blank">
+                              <img
+                                 src="../../wp-content/uploads/2025/12/Discord-Symbol-White.svg"
+                                 alt="Discord"
+                                 width="0"
+                                 height="0"
+                              >
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="col-12 col-lg-4 order-lg-2">
+                  <div class="text-center">
+                     <a class="navbar-brand" href="../../index.html">
+                        <img
+                           src="../../wp-content/uploads/2022/06/logo-2.svg"
+                           alt="MedEdPrep"
+                           width="0"
+                           height="0"
+                        >
+                     </a>
+                     <p class="copy-right mb-0">&copy; 2026 If you have any questions or concerns, please reach out to <a href="mailto:info@mededprep.com">info@mededprep.com</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </footer>
+
+   <div class="loader-wrap d-none">
+      <div class="loader-div">
+         <div class="intro-block">
+            <div class="monitor">
+               <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 500 200" style="enable-background:new 0 0 500 200;" xml:space="preserve">
+                  <g>
+                     <polyline class="ekg" points="486.6,113.8 328.2,113.8 310.3,132.3 296,70.7 246.8,127.4 241.6,120.2 233.9,166.4 227,27.6
+                        213.2,118.3 211.8,112.3 205.1,126.1 198.2,108.5 194.1,124.4 184.5,92.9 174.1,113 4.3,113"/>
+                  </g>
+               </svg>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- MAIN JS -->
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/bootstrap.bundle.min.js" id="bootstrap-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/swiper.min.js" id="swiper-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/aos.js" id="aos-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/jquery.counterup.min.js" id="counterup-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/waypoints.min.js" id="waypoints-js"></script>
+   <script type="text/javascript" src="../../wp-content/themes/theme-mededprep/assets/js/mainframe.js" id="mainframe-js"></script>
+
+</body>
+
+</html>
